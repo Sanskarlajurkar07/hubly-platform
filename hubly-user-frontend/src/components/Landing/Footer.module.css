@@ -1,0 +1,314 @@
+/* ===========================
+   FOOTER — Hubly CRM
+   Pixel-Perfect Figma Copy
+   Exact Figma Specifications
+   =========================== */
+
+.footer {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  background: #FFFFFF;
+  padding: 75px;
+  position: relative;
+  min-height: 666.09px;
+  overflow: hidden; /* For background polygon */
+}
+
+/* Background polygon - decorative element from Figma */
+.footer::before {
+  content: '';
+  position: absolute;
+  width: 884px;
+  height: 629px;
+  left: calc(50% - 884px / 2);
+  bottom: 0.09px;
+  background: rgba(36, 71, 121, 0.04);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  gap: 0;
+  position: relative;
+  z-index: 1; /* Above background polygon */
+}
+
+/* LEFT SIDE LOGO - 150px width, 75px from left */
+.footerLeft {
+  width: 150px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+.footerLogo {
+  width: 135px;
+  height: auto;
+}
+
+/* GRID LINK SECTION - 960px width starting at 405px */
+.footerGrid {
+  width: 960px;
+  margin-left: 255px; /* 405px - 150px (logo width) */
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  grid-template-rows: auto auto;
+  gap: 30px 30px;
+  position: relative;
+}
+
+/* First row columns */
+.footerCol:nth-child(1),
+.footerCol:nth-child(2),
+.footerCol:nth-child(3) {
+  grid-row: 1;
+}
+
+/* Second row columns */
+.footerCol:nth-child(4),
+.footerCol:nth-child(5) {
+  grid-row: 2;
+  margin-top: 0;
+}
+
+.footerCol:nth-child(4) {
+  grid-column: 1;
+}
+
+.footerCol:nth-child(5) {
+  grid-column: 2;
+}
+
+/* Column 3 in second row - Form section with social icons */
+.footerCol:nth-child(6) {
+  grid-row: 2;
+  grid-column: 3;
+}
+
+.footerCol {
+  width: 300px;
+  position: relative;
+}
+
+.footerCol h4 {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17.1563px; /* Average of Figma values: 17.1563px, 17.2969px, 17.0156px, 17.4375px */
+  line-height: 28px;
+  color: #1B1A1A;
+  margin: 0;
+  padding: 0;
+  height: 28px;
+  margin-top: 12.05px; /* Figma: top: 12.05px */
+  margin-bottom: 18px; /* 58.05px - 12.05px - 28px = 18px */
+  display: flex;
+  align-items: center;
+}
+
+.footerCol a {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16.875px; /* Average of Figma values: 16.7344px, 16.875px, 17.0156px, 17.1563px, 16.5938px, 16.1719px, 16.4531px */
+  line-height: 28px;
+  color: #1B1A1A;
+  text-decoration: none;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+  margin-bottom: 0;
+}
+
+/* First link: top 58.05px, subsequent links: 96.05px, 134.05px, 172.05px, 210.05px */
+/* Gap between links: 38px (96.05 - 58.05 = 38px) */
+.footerCol a:not(:last-child) {
+  margin-bottom: 38px; /* Exact gap from Figma: 38px between links */
+}
+
+.footerCol a:hover {
+  color: #244779;
+}
+
+/* SOCIAL COLUMN - 6th column in second row */
+.socialCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.socialCol h4 {
+  margin-top: 12.05px; /* Match other columns */
+  margin-bottom: 18px; /* Match other columns */
+}
+
+/* SOCIAL ICONS SECTION - In the 6th column (Form section) */
+/* Figma: Form section starts at top: 68.09px, social icons at top: 185.69px */
+.socials {
+  display: flex;
+  gap: 22px; /* Exact from Figma: 46px - 24px icon width = 22px gap */
+  margin-top: 0;
+  flex-wrap: wrap;
+  height: 24px;
+  align-items: center;
+}
+
+.social {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid #616161; /* Figma: 0.5px solid #616161 */
+  border-radius: 6px;
+  color: #616161;
+  background: transparent;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.social:hover {
+  background-color: #F8F9FA;
+  border-color: #244779;
+  color: #244779;
+}
+
+.social:hover svg path {
+  fill: #244779;
+  stroke: #244779;
+}
+
+.social svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.social svg path {
+  fill: #616161; /* Figma: background: #616161 */
+  stroke: #616161; /* Figma: border: 0.5px solid #616161 */
+  transition: fill 0.2s ease, stroke 0.2s ease;
+}
+
+/* Ensure SVG fills are properly set */
+.social svg path[fill="currentColor"] {
+  fill: #616161;
+}
+
+.social:hover svg path[fill="currentColor"] {
+  fill: #244779;
+}
+
+/* COPYRIGHT - Below the grid */
+.copyright {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  opacity: 0.7;
+  color: #1B1A1A;
+  margin-top: 48px;
+  text-align: left;
+  width: 100%;
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+
+@media (max-width: 1440px) {
+  .footer {
+    max-width: 100%;
+    padding: 60px 40px;
+  }
+
+  .footerGrid {
+    width: 100%;
+    margin-left: 0;
+    max-width: 960px;
+  }
+}
+
+@media (max-width: 980px) {
+  .footer {
+    padding: 60px 24px 32px;
+  }
+
+  .container {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .footerLeft {
+    width: 100%;
+  }
+
+  .footerGrid {
+    width: 100%;
+    margin-left: 0;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+  .footerCol:nth-child(1),
+  .footerCol:nth-child(2),
+  .footerCol:nth-child(3),
+  .footerCol:nth-child(4),
+  .footerCol:nth-child(5),
+  .footerCol:nth-child(6) {
+    grid-row: auto;
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 48px 20px 24px;
+  }
+
+  .footerGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer {
+    padding: 40px 16px 24px;
+  }
+
+  .footerGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footerCol h4 {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .footerCol a {
+    font-size: 15px;
+    margin: 6px 0;
+  }
+
+  .socials {
+    gap: 8px;
+  }
+
+  .social {
+    width: 32px;
+    height: 32px;
+  }
+
+  .copyright {
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,187 @@
+.dashboard h1 {
+    font-size: 24px;
+    color: #334155;
+    margin-bottom: 20px;
+}
+
+.search-bar-container {
+    margin-bottom: 30px;
+}
+
+.main-search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 12px center;
+    background-size: 20px;
+    padding-left: 40px;
+}
+
+.tabs-nav {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 20px;
+}
+
+.tabs-nav button {
+    background: none;
+    border: none;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #64748b;
+    cursor: pointer;
+    position: relative;
+}
+
+.tabs-nav button.active {
+    color: #3B82F6;
+    font-weight: 600;
+}
+
+.tabs-nav button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #3B82F6;
+}
+
+.tickets-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ticket-card-item {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.ticket-card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.ticket-id-badge {
+    font-weight: 600;
+    color: #334155;
+}
+
+.ticket-date {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.ticket-card-body h3 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: #1e293b;
+}
+
+.status-pill {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-pill.open {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.status-pill.in-progress {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-pill.resolved {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.ticket-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    background-color: #e2e8f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    font-weight: bold;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-details .name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.user-details .contact {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.open-ticket-btn {
+    color: #3B82F6;
+    background: none;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.pagination button {
+    padding: 8px 16px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

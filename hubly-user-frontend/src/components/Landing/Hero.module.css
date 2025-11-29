@@ -1,0 +1,379 @@
+/* =================================================================
+   HERO SECTION - HUBLY CRM LANDING PAGE
+   Production-Ready | Figma-Exact | CSS Modules Only
+   ================================================================= */
+
+/* Design Tokens - Extracted from Figma */
+:root {
+  /* Primary Colors */
+  --hero-primary: #244779;
+  --hero-primary-hover: #1a3563;
+  --hero-text-dark: #1a1a1a;
+  --hero-text-light: #666666;
+  --hero-bg: #F8F9FA;
+  --hero-white: #FFFFFF;
+  --hero-border: #E5E7EB;
+  
+  /* Typography - Exact Figma Values */
+  --hero-title-size: 54px;
+  --hero-title-weight: 700;
+  --hero-subtitle-size: 16px;
+  --hero-subtitle-weight: 400;
+  --hero-subtitle-line: 1.4;
+  --hero-button-size: 14px;
+  --hero-button-weight: 600;
+  
+  /* Spacing Scale */
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-60: 60px;
+  
+  /* Border Radius */
+  --radius-button: 8px;
+  --radius-image: 22px;
+  --radius-card: 12px;
+  
+  /* Shadows */
+  --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-image: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* =================================================================
+   HERO SECTION LAYOUT
+   ================================================================= */
+
+.hero {
+  padding: var(--space-60) 0;
+  background: var(--hero-bg);
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-24);
+}
+
+/* Two Column Grid Layout - Figma Exact */
+.heroContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-60);
+  align-items: center;
+  position: relative;
+}
+
+/* =================================================================
+   LEFT COLUMN - TEXT CONTENT
+   ================================================================= */
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+/* Hero Title - Figma Exact: 54px, 700 weight */
+.heroText h1 {
+  font-family: 'Barlow', sans-serif;
+  font-size: var(--hero-title-size);
+  font-weight: var(--hero-title-weight);
+  line-height: 1.2;
+  color: var(--hero-text-dark);
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+/* Subtitle - Figma Exact: 16px, 400 weight, 140% line-height */
+.heroText p {
+  font-family: 'Barlow', sans-serif;
+  font-size: var(--hero-subtitle-size);
+  font-weight: var(--hero-subtitle-weight);
+  line-height: var(--hero-subtitle-line);
+  color: var(--hero-text-light);
+  margin: 0;
+  max-width: 500px;
+}
+
+/* =================================================================
+   BUTTON GROUP - Figma Exact Specifications
+   ================================================================= */
+
+.buttonGroup {
+  display: flex;
+  gap: var(--space-16);
+  margin-top: var(--space-16);
+}
+
+/* Base Button Styles */
+.btn {
+  font-family: 'Barlow', sans-serif;
+  padding: var(--space-12) var(--space-24);
+  border-radius: var(--radius-button);
+  font-size: var(--hero-button-size);
+  font-weight: var(--hero-button-weight);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  line-height: 1;
+}
+
+/* Primary Button - Get Started */
+.btnPrimary {
+  background: var(--hero-primary);
+  color: var(--hero-white);
+  min-width: 140px;
+  border: 2px solid var(--hero-primary);
+}
+
+.btnPrimary:hover {
+  background: var(--hero-primary-hover);
+  border-color: var(--hero-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-button);
+}
+
+/* Secondary Button - Watch Video */
+.btnSecondary {
+  background: transparent;
+  color: var(--hero-text-dark);
+  border: 1px solid var(--hero-border);
+  padding: 10px var(--space-24);
+}
+
+.btnSecondary:hover {
+  background: var(--hero-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.watchIcon {
+  height: 20px;
+  width: auto;
+  display: block;
+}
+
+/* =================================================================
+   RIGHT COLUMN - HERO IMAGE WITH FLOATING ELEMENTS
+   ================================================================= */
+
+.heroImage {
+  position: relative;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main Image Container */
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 436px;
+  height: 452px;
+  border-radius: var(--radius-image);
+  overflow: hidden;
+  box-shadow: var(--shadow-image);
+  z-index: 10;
+}
+
+.mainImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* =================================================================
+   FLOATING DECORATIVE ELEMENTS - Exact Figma Positions
+   ================================================================= */
+
+/* Calendar Widget - Bottom Left */
+.calendarContainer {
+  position: absolute;
+  width: 243px;
+  height: auto;
+  left: -58px;
+  bottom: -30px;
+  z-index: 20;
+  filter: drop-shadow(var(--shadow-float));
+  pointer-events: none;
+}
+
+.calendarContainer img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* User Badge - Top Right */
+.svgBadge {
+  position: absolute;
+  width: 280px;
+  height: auto;
+  right: -100px;
+  top: -20px;
+  z-index: 15;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+  pointer-events: none;
+}
+
+.svgBadge img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Sales Widget - Bottom Right */
+.salesWidget {
+  position: absolute;
+  width: 180px;
+  height: auto;
+  right: -50px;
+  bottom: 20px;
+  z-index: 15;
+  filter: drop-shadow(var(--shadow-float));
+  pointer-events: none;
+}
+
+.salesWidget img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Tablet Responsive (768px - 1024px) */
+@media (max-width: 1024px) {
+  .hero {
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .heroContent {
+    gap: var(--spacing-2xl);
+  }
+
+  .heroText h1 {
+    font-size: 42px;
+  }
+
+  .heroText p {
+    font-size: 15px;
+  }
+
+  .heroImage {
+    height: 400px;
+  }
+
+  .imageWrapper {
+    max-width: 380px;
+    height: 400px;
+  }
+
+  .calendarContainer {
+    width: 200px;
+    left: -40px;
+    bottom: -20px;
+  }
+
+  .svgBadge {
+    width: 240px;
+    right: -80px;
+  }
+
+  .salesWidget {
+    width: 150px;
+    right: -40px;
+  }
+}
+
+/* Mobile Responsive (max-width: 768px) */
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .container {
+    padding: 0 var(--spacing-md);
+  }
+
+  .heroContent {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .heroText {
+    text-align: center;
+    align-items: center;
+  }
+
+  .heroText h1 {
+    font-size: 36px;
+  }
+
+  .heroText p {
+    font-size: 15px;
+    max-width: 100%;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .heroImage {
+    height: 350px;
+    margin-top: var(--spacing-lg);
+  }
+
+  .imageWrapper {
+    max-width: 320px;
+    height: 340px;
+  }
+
+  /* Hide floating elements on mobile for cleaner layout */
+  .calendarContainer,
+  .svgBadge,
+  .salesWidget {
+    display: none;
+  }
+}
+
+/* Small Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .heroText h1 {
+    font-size: 32px;
+  }
+
+  .heroText p {
+    font-size: 14px;
+  }
+
+  .btn {
+    padding: 10px var(--spacing-md);
+    font-size: 13px;
+  }
+
+  .heroImage {
+    height: 300px;
+  }
+
+  .imageWrapper {
+    max-width: 280px;
+    height: 300px;
+  }
+}

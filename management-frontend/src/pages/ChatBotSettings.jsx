@@ -1,0 +1,225 @@
+import React, { useState, useEffect } from 'react';
+import api from '../api/axios';
+import { useAuth } from '../context/AuthContext';
+import '../styles/ChatBotSettings.css';
+
+const ChatBotSettings = () => {
+    const [config, setConfig] = useState({
+        headerColor: '#3B82F6',
+        backgroundColor: '#FFFFFF',
+        initialMessage: 'How can i help you?',
+        popMessageText: 'Ask me anything!',
+    });
+    const [timer, setTimer] = useState({
+        hours: 0,
+        minutes: 10,
+        seconds: 0
+    });
+    const { user } = useAuth();
+
+    useEffect(() => {
+        const fetchSettings = async () => {
+            try {
+                const res = await api.get('/settings');
+                if (res.data) {
+                    if (res.data.chatBotConfig) setConfig(res.data.chatBotConfig);
+                    // Timer logic might need conversion if backend stores minutes as number
+                    // Backend stores `missedChatTimer` as number (minutes).
+                    if (res.data.missedChatTimer) {
+                        setTimer({ hours: 0, minutes: res.data.missedChatTimer, seconds: 0 });
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to fetch settings', error);
+            }
+        };
+        fetchSettings();
+    }, []);
+
+    const handleConfigChange = (e) => {
+        setConfig({ ...config, [e.target.name]: e.target.value });
+    };
+
+    const handleColorSelect = (name, color) => {
+        setConfig({ ...config, [name]: color });
+    }
+
+    const handleSave = async () => {
+        try {
+            await api.put('/settings', {
+                chatBotConfig: config,
+                missedChatTimer: parseInt(timer.minutes), // Simplified for now
+            });
+            alert('Settings updated successfully!');
+        } catch (error) {
+            alert('Failed to update settings');
+        }
+    };
+
+    return (
+        <div className="chatbot-settings-page">
+            <h1>Chat Bot</h1>
+
+            <div className="chatbot-layout">
+                {/* Preview Section */}
+                <div className="preview-section">
+                    <div className="phone-mockup">
+                        <div className="mockup-header" style={{ backgroundColor: config.headerColor }}>
+                            <div className="mockup-avatar">🤖</div>
+                            <span>Hubly</span>
+                        </div>
+                        <div className="mockup-body" style={{ backgroundColor: config.backgroundColor }}>
+                            <div className="mockup-message received">
+                                {config.initialMessage}
+                            </div>
+                            <div className="mockup-message received">
+                                {config.popMessageText}
+                            </div>
+
+                            <div className="mockup-form">
+                                <h4>Introduction Yourself</h4>
+                                <input type="text" placeholder="Your name" disabled />
+                                <input type="text" placeholder="Your Phone" disabled />
+                                <input type="text" placeholder="Your Email" disabled />
+                                <button style={{ backgroundColor: config.headerColor }}>Thank You!</button>
+                            </div>
+                        </div>
+                        <div className="mockup-footer">
+                            <span>Write a message</span>
+                            <span>➤</span>
+                        </div>
+                    </div>
+
+                    {/* Floating Icon Preview */}
+                    <div className="floating-preview">
+                        <div className="pop-tooltip">
+                            👋 Want to chat about Hubly? I'm an chatbot here to help you find your way.
+                            <span className="close-x">×</span>
+                        </div>
+                        <div className="floating-icon" style={{ backgroundColor: config.headerColor }}>
+                            🤖
+                        </div>
+                    </div>
+                </div>
+
+                {/* Settings Section */}
+                <div className="controls-section">
+
+                    <div className="control-card">
+                        <h3>Header Color</h3>
+                        <div className="color-options">
+                            {['#FFFFFF', '#000000', '#1e293b', '#3B82F6'].map(c => (
+                                <div
+                                    key={c}
+                                    className={`color-circle ${config.headerColor === c ? 'selected' : ''}`}
+                                    style={{ backgroundColor: c, border: c === '#FFFFFF' ? '1px solid #ddd' : 'none' }}
+                                    onClick={() => handleColorSelect('headerColor', c)}
+                                />
+                            ))}
+                        </div>
+                        <div className="hex-input">
+                            <input
+                                type="text"
+                                name="headerColor"
+                                value={config.headerColor}
+                                onChange={handleConfigChange}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="control-card">
+                        <h3>Custom Background Color</h3>
+                        <div className="color-options">
+                            {['#FFFFFF', '#000000', '#f8fafc'].map(c => (
+                                <div
+                                    key={c}
+                                    className={`color-circle ${config.backgroundColor === c ? 'selected' : ''}`}
+                                    style={{ backgroundColor: c, border: c === '#FFFFFF' ? '1px solid #ddd' : 'none' }}
+                                    onClick={() => handleColorSelect('backgroundColor', c)}
+                                />
+                            ))}
+                        </div>
+                        <div className="hex-input">
+                            <input
+                                type="text"
+                                name="backgroundColor"
+                                value={config.backgroundColor}
+                                onChange={handleConfigChange}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="control-card">
+                        <h3>Customize Message</h3>
+                        <div className="input-group">
+                            <input
+                                type="text"
+                                name="initialMessage"
+                                value={config.initialMessage}
+                                onChange={handleConfigChange}
+                                placeholder="Initial Message"
+                            />
+                            <span className="edit-icon">✎</span>
+                        </div>
+                        <div className="input-group">
+                            <input
+                                type="text"
+                                name="popMessageText"
+                                value={config.popMessageText}
+                                onChange={handleConfigChange}
+                                placeholder="Pop Message"
+                            />
+                            <span className="edit-icon">✎</span>
+                        </div>
+                    </div>
+
+                    <div className="control-card">
+                        <h3>Introduction Form</h3>
+                        {/* Simplified for demo as per screenshot */}
+                        <div className="form-preview-list">
+                            <div className="form-field-preview">
+                                <label>Your name</label>
+                                <input type="text" value="Your name" readOnly />
+                            </div>
+                            <div className="form-field-preview">
+                                <label>Your Phone</label>
+                                <input type="text" value="+1 (000) 000-0000" readOnly />
+                            </div>
+                            <div className="form-field-preview">
+                                <label>Your Email</label>
+                                <input type="text" value="example@gmail.com" readOnly />
+                            </div>
+                            <button className="preview-submit-btn" style={{ backgroundColor: config.headerColor }}>Thank You!</button>
+                        </div>
+                    </div>
+
+                    <div className="control-card">
+                        <h3>Missed chat timer</h3>
+                        <div className="timer-inputs">
+                            <div className="time-col">
+                                <label>12</label>
+                                <input type="number" value={timer.hours} readOnly />
+                            </div>
+                            <span>:</span>
+                            <div className="time-col">
+                                <label>09</label>
+                                <input type="number" value={timer.minutes} onChange={(e) => setTimer({ ...timer, minutes: e.target.value })} />
+                            </div>
+                            <span>:</span>
+                            <div className="time-col">
+                                <label>59</label>
+                                <input type="number" value={timer.seconds} readOnly />
+                            </div>
+                        </div>
+                        <div className="save-action">
+                            <button onClick={handleSave}>Save</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default ChatBotSettings;

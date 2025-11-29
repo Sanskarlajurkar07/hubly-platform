@@ -1,0 +1,193 @@
+.features {
+  padding: 100px 0;
+  background: #FFFFFF;
+}
+
+/* Figma ENFORCES center layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  gap: 24px;
+}
+
+/* === Figma Title === */
+.title {
+  width: 100%;
+  max-width: 673px;
+  height: auto;
+
+  font-family: 'Barlow', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 120%;
+  text-align: center;
+  color: #30404D;
+
+  margin: 0;
+  padding: 0;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+/* === Figma Subtitle === */
+.subtitle {
+  width: 100%;
+  max-width: 725px;
+
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%; /* 25px */
+  text-align: center;
+  color: #30404D;
+
+  opacity: 0.9;
+  margin-bottom: 45px;
+}
+
+/* === Figma 3×2 Grid === */
+.grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+/* === Feature Card === */
+.card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Icon */
+.icon {
+  width: 64px;
+  height: 64px;
+}
+
+/* Card Title */
+.cardTitle {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: #30404D;
+}
+
+/* Card Description */
+.cardDesc {
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  line-height: 150%;
+  color: #30404D;
+  opacity: 0.8;
+}
+
+/* Core Features Section */
+.coreFeatures {
+  padding: 100px 0;
+  background: #FFFFFF;
+}
+
+.coreFeatures h2 {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #30404D;
+  margin-bottom: 24px;
+  max-width: 725px;
+  font-family: 'Barlow', sans-serif;
+}
+
+.coreFeatures .subtitle {
+  margin-bottom: 60px;
+}
+
+.description {
+  font-size: 18px;
+  line-height: 1.4;
+  color: #30404D;
+  opacity: 1;
+  margin-bottom: 60px;
+  max-width: 725px;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+}
+
+.featureImage {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .coreFeatures {
+    padding: 60px 0 80px 0;
+  }
+
+  .coreFeatures h2 {
+    font-size: 32px;
+  }
+
+  .description {
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .title {
+    font-size: 32px;
+    max-width: 90%;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    max-width: 90%;
+  }
+}

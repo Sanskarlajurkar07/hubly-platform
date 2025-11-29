@@ -1,0 +1,54 @@
+.settings-page h1 {
+  margin-bottom: 30px;
+  color: #1e293b;
+}
+
+.settings-form {
+  max-width: 600px;
+}
+
+.section {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
+}
+
+.section h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #64748b;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.color-input {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.color-input input[type="color"] {
+  width: 50px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save-btn {
+  padding: 12px 30px;
+  background-color: #3B82F6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: #2563EB;
+}

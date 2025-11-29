@@ -1,0 +1,109 @@
+.layout {
+    display: flex;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc;
+}
+
+.sidebar {
+    width: 80px;
+    /* Collapsed width style based on screenshot hint or just minimal */
+    background-color: white;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    transition: width 0.3s;
+}
+
+.sidebar:hover {
+    width: 200px;
+}
+
+.logo {
+    margin-bottom: 40px;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    /* Center icon if collapsed */
+    color: #64748b;
+    text-decoration: none;
+    transition: all 0.3s;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+    color: #3B82F6;
+    background-color: #eff6ff;
+    border-right: 3px solid #3B82F6;
+}
+
+.sidebar nav a .icon {
+    font-size: 20px;
+    min-width: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar nav a .label {
+    margin-left: 10px;
+    opacity: 0;
+    /* Hidden by default if collapsed logic used, but here we use hover expansion */
+    transition: opacity 0.2s;
+}
+
+.sidebar:hover nav a .label {
+    opacity: 1;
+}
+
+.user-profile {
+    margin-top: auto;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-profile .avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #cbd5e1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: white;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    opacity: 0.7;
+}
+
+.logout-btn:hover {
+    opacity: 1;
+}
+
+.main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 30px;
+}

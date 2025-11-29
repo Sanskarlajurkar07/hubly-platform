@@ -1,0 +1,32 @@
+.trusted {
+  background: #EBF1F9;
+  padding: 60px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.strip {
+  width: 100%;
+  height: auto;
+  max-width: 1440px;
+  opacity: 0.95;
+  transition: opacity 0.2s ease;
+}
+
+.strip:hover {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .strip {
+    max-width: 100%;
+  }
+}

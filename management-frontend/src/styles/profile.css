@@ -1,0 +1,247 @@
+/* Profile Settings Container */
+.profile-settings {
+  max-width: 1200px;
+  margin: 0;
+  /* Left align */
+}
+
+/* Profile Header */
+.profile-header {
+  margin-bottom: var(--space-6);
+}
+
+.profile-title {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+/* Profile Content */
+.profile-content {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+/* Profile Card */
+.profile-card {
+  padding: 0;
+}
+
+/* Tab Header */
+.profile-tab-header {
+  border-bottom: 2px solid var(--gray-200);
+  padding: 0 var(--space-6);
+}
+
+.profile-tab {
+  padding: var(--space-4) var(--space-6);
+  background: none;
+  border: none;
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--gray-600);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all var(--transition-base);
+}
+
+.profile-tab.active {
+  color: #1A5C95;
+  /* Dark Blue */
+  border-bottom-color: #1A5C95;
+}
+
+/* Profile Form */
+.profile-form {
+  padding: var(--space-8) var(--space-6);
+  max-width: 700px;
+}
+
+.profile-form .form-group {
+  margin-bottom: var(--space-5);
+}
+
+.profile-form .form-label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--gray-700);
+  margin-bottom: var(--space-2);
+}
+
+.profile-form .form-input {
+  width: 100%;
+  height: 52px;
+  padding: 14px 48px 14px 16px;
+  border: 1px solid var(--gray-300);
+  /* Thinner border */
+  border-radius: 8px;
+  /* Specific radius */
+  font-size: var(--text-base);
+  color: var(--gray-900);
+  background: var(--white);
+  transition: all var(--transition-base);
+}
+
+.profile-form .form-input:focus {
+  outline: none;
+  border-color: #1A5C95;
+  box-shadow: 0 0 0 4px rgba(26, 92, 149, 0.1);
+}
+
+.profile-form .form-input:disabled {
+  background: var(--gray-50);
+  color: var(--gray-500);
+  cursor: not-allowed;
+}
+
+.profile-form .form-input::placeholder {
+  color: var(--gray-400);
+}
+
+/* Form Input with Icon */
+.form-input-with-icon {
+  position: relative;
+}
+
+.form-info-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: var(--gray-400);
+  cursor: help;
+}
+
+.form-info-icon.clickable {
+  cursor: pointer;
+}
+
+.form-info-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Tooltip */
+.form-tooltip {
+  position: absolute;
+  right: 40px;
+  /* Position to the left of the icon */
+  top: 50%;
+  transform: translateY(-50%);
+  background: #F3F4F6;
+  /* Light grey background */
+  color: var(--gray-700);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--gray-200);
+}
+
+/* Arrow for tooltip */
+.form-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  /* Arrow pointing right */
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid #F3F4F6;
+}
+
+/* Profile Message */
+.profile-message {
+  margin: var(--space-6);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.profile-message.success {
+  background: var(--success-light);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.profile-message.error {
+  background: var(--error-light);
+  color: var(--error);
+  border: 1px solid var(--error);
+}
+
+/* Form Actions */
+.profile-form-actions {
+  margin-top: var(--space-8);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-save {
+  min-width: 140px;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #1A5C95;
+  /* Dark Blue */
+  border-color: #1A5C95;
+  border-radius: 8px;
+  color: white;
+}
+
+.btn-save:hover {
+  background-color: #154a78;
+  border-color: #154a78;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profile-settings {
+    padding: var(--space-4);
+  }
+
+  .profile-title {
+    font-size: var(--text-2xl);
+  }
+
+  .profile-form {
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .profile-tab-header {
+    padding: 0 var(--space-5);
+  }
+
+  .profile-form-actions {
+    justify-content: stretch;
+  }
+
+  .btn-save {
+    width: 100%;
+  }
+
+  .form-tooltip {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+    margin-top: 8px;
+  }
+
+  .form-tooltip::after {
+    display: none;
+    /* Hide arrow on mobile or adjust */
+  }
+}

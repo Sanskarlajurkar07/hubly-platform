@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Primary Colors - From Figma Guide */
+  --primary: #244779;
+  --primary-hover: #1A3563;
+  --primary-light: #EFF6FF;
+  
+  /* Text Colors - From Figma Guide */
+  --text-dark: #1F2937;
+  --text-body: #30404D;
+  --text-light: #6B7280;
+  --text-muted: #9CA3AF;
+  
+  /* Background Colors - From Figma Guide */
+  --bg-white: #FFFFFF;
+  --bg-gray-light: #F8F9FA;
+  --bg-blue-light: #EBF1F9;
+  
+  /* Border Colors - From Figma Guide */
+  --border-light: #E5E7EB;
+  --border-medium: #E7E7E7;
+  
+  /* Accent Colors - From Figma Guide */
+  --success: #10B981;
+  --error: #EF4444;
+  --warning: #F59E0B;
+  
+  /* Typography - From Figma Guide */
+  --font-primary: 'Barlow', sans-serif;
+  --font-secondary: 'Inter', sans-serif;
+  
+  /* Spacing Scale - From Figma Guide */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  
+  /* Container */
+  --container-max: 1200px;
+  --container-padding: 24px;
+  
+  /* Section Padding */
+  --section-padding-y: 80px;
+  --section-padding-y-large: 120px;
+}
+
+body {
+  font-family: var(--font-primary);
+  color: var(--text-body);
+  line-height: 1.6;
+  background-color: var(--bg-white);
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}

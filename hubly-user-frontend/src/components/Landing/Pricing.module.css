@@ -1,0 +1,250 @@
+.pricingSection {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  background: #FFFFFF;
+}
+
+/* ---------------- HEADER ---------------- */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 24px;
+
+  width: 100%;
+  max-width: 711px;
+  height: auto;
+  margin: 0 auto 60px;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.header h2 {
+  width: 100%;
+  max-width: 711px;
+  height: auto;
+
+  font-family: 'Barlow', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 120%;
+  text-align: center;
+  color: #30404D;
+
+  margin: 0;
+  padding: 0;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.header p {
+  width: 100%;
+  max-width: 625px;
+  height: auto;
+
+  font-family: 'Barlow', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  text-align: center;
+  color: #30404D;
+
+  margin: 0;
+  padding: 0;
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+/* ---------------- GRID ---------------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------------- CARD ---------------- */
+
+.card {
+  width: 100%;
+  max-width: 588px;
+  background: #ffffff;
+  border: 2px solid rgba(47, 95, 139, 0.1);
+  border-radius: 24px;
+  box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.03);
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.topBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cardTitle {
+  font-family: "Barlow";
+  font-weight: 700;
+  font-size: 24px;
+  color: #30404d;
+  margin: 0;
+}
+
+.cardDesc {
+  font-family: "Barlow";
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 140%;
+  color: rgba(48, 64, 77, 0.7);
+  max-width: 516px;
+}
+
+/* ---------------- PRICE ---------------- */
+
+.priceWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price {
+  font-family: "Barlow";
+  font-weight: 700;
+  font-size: 54px;
+  line-height: 140%;
+  color: #3a7abd;
+}
+
+.month {
+  font-family: "Barlow";
+  font-weight: 500;
+  font-size: 20px;
+  color: #98a8b3;
+}
+
+/* ---------------- FEATURES ---------------- */
+
+.featuresBlock h4 {
+  font-family: "Barlow";
+  font-weight: 700;
+  font-size: 18px;
+  color: #30404d;
+  margin-bottom: 16px;
+}
+
+.featureList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.featureList li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: "Barlow";
+  font-size: 18px;
+  font-weight: 500;
+  color: #30404d;
+}
+
+.checkIcon {
+  width: 24px;
+  height: 24px;
+  background: #e1eefA;
+  color: #2f5f8b;
+  font-size: 14px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------------- BUTTON ---------------- */
+
+.btn {
+  width: 100%;
+  max-width: 516px;
+  height: 72px;
+  padding: 16px 24px;
+  border-radius: 64px;
+  border: 1px solid rgba(36, 71, 121, 0.4);
+  background: transparent;
+  font-family: "Barlow", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #244779;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background: #244779;
+  color: #FFFFFF;
+  border-color: #244779;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pricingSection {
+    padding: 60px 0;
+  }
+
+  .header h2 {
+    font-size: 32px;
+  }
+
+  .header p {
+    font-size: 16px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 0 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 100%;
+    height: 60px;
+    font-size: 16px;
+  }
+}
