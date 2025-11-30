@@ -29,7 +29,7 @@ const addTeamMember = async (req, res) => {
     const user = await User.create({
       name,
       email,
-      password,
+      password: password || Math.random().toString(36).slice(-8), // Generate random password if not provided
       phone,
       role: 'team_member', // Always default to team_member, only one admin allowed
     });
