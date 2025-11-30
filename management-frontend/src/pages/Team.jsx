@@ -5,7 +5,7 @@ import AddMemberModal from '../components/TeamManagement/AddMemberModal';
 import EditMemberModal from '../components/TeamManagement/EditMemberModal';
 import DeleteConfirmModal from '../components/TeamManagement/DeleteConfirmModal';
 import userAvatar from '../assets/image.svg';
-import '../styles/Team.css';
+import '../styles/team.css';
 
 const Team = () => {
   const [team, setTeam] = useState([]);
