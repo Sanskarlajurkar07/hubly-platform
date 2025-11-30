@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
-import '../styles/Settings.css';
+import '../styles/settings.css';
 
 const Settings = () => {
   const [config, setConfig] = useState({

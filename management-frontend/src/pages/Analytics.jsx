@@ -12,7 +12,7 @@ import {
   Cell
 } from 'recharts';
 import api from '../api/axios';
-import '../styles/Analytics.css';
+import '../styles/analytics.css';
 
 const Analytics = () => {
   const [data, setData] = useState(null);
