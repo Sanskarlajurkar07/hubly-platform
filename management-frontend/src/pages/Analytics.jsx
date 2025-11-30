@@ -1,11 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell
+} from 'recharts';
 import api from '../api/axios';
 import '../styles/Analytics.css';
 
 const Analytics = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  // Fetch analytics data from backend
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
@@ -13,6 +27,7 @@ const Analytics = () => {
         setData(res.data);
       } catch (error) {
         console.error('Failed to fetch analytics', error);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -20,12 +35,69 @@ const Analytics = () => {
     fetchAnalytics();
   }, []);
 
-  if (loading) return <div className="analytics-page">Loading...</div>;
-  if (!data) return <div className="analytics-page">No data available yet</div>;
+  const COLORS = ['#00FF00', '#E5E7EB'];
 
-  // Mock data for the line chart visualization since backend only provides summary
-  // In a real app, backend should provide historical data
-  const chartPoints = [13, 8, 14, 9, 6, 12, 4, 9, 16, 18];
+  // Custom tooltip for line chart
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip">
+          <p className="tooltip-label">Chats</p>
+          <p className="tooltip-value">{payload[0].value}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  // If loading, show loading state
+  if (loading) {
+    return (
+      <div className="analytics-page">
+        <div className="analytics-loading">Loading analytics...</div>
+      </div>
+    );
+  }
+
+  // If no data available, show empty state
+  if (!data || data.totalChats === 0) {
+    return (
+      <div className="analytics-page">
+        <div className="analytics-header">
+          <h2>Analytics</h2>
+        </div>
+        <div className="analytics-no-data">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+          <p>No data available yet</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Calculate resolved vs unresolved from backend data
+  const resolvedData = [
+    { name: 'Resolved', value: data.resolvedVsUnresolved?.resolved || 0 },
+    { name: 'Unresolved', value: data.resolvedVsUnresolved?.unresolved || 0 }
+  ];
+
+  // Calculate percentage for display
+  const totalTickets = resolvedData[0].value + resolvedData[1].value;
+  const resolvedPercentage = totalTickets > 0
+    ? Math.round((resolvedData[0].value / totalTickets) * 100)
+    : 0;
+
+  // Custom label for pie chart center
+  const renderCustomLabel = () => {
+    return (
+      <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" className="pie-center-label">
+        <tspan x="50%" dy="-0.2em" fontSize="24" fontWeight="bold" fill="#00FF00">
+          {resolvedPercentage}%
+        </tspan>
+      </text>
+    );
+  };
 
   return (
     <div className="analytics-page">
@@ -40,64 +112,36 @@ const Analytics = () => {
           <span className="more-options">•••</span>
         </div>
         <div className="line-chart-container">
-          {/* Simplified CSS Line Chart Visualization */}
-          <svg viewBox="0 0 500 150" className="line-chart-svg">
-            {/* Grid lines */}
-            <line x1="0" y1="120" x2="500" y2="120" stroke="#f1f5f9" />
-            <line x1="0" y1="80" x2="500" y2="80" stroke="#f1f5f9" />
-            <line x1="0" y1="40" x2="500" y2="40" stroke="#f1f5f9" />
-
-            {/* The Line */}
-            <path
-              d={`M0,${150 - chartPoints[0] * 5} 
-                       C25,${150 - chartPoints[0] * 5} 25,${150 - chartPoints[1] * 5} 50,${150 - chartPoints[1] * 5}
-                       C75,${150 - chartPoints[1] * 5} 75,${150 - chartPoints[2] * 5} 100,${150 - chartPoints[2] * 5}
-                       C125,${150 - chartPoints[2] * 5} 125,${150 - chartPoints[3] * 5} 150,${150 - chartPoints[3] * 5}
-                       C175,${150 - chartPoints[3] * 5} 175,${150 - chartPoints[4] * 5} 200,${150 - chartPoints[4] * 5}
-                       C225,${150 - chartPoints[4] * 5} 225,${150 - chartPoints[5] * 5} 250,${150 - chartPoints[5] * 5}
-                       C275,${150 - chartPoints[5] * 5} 275,${150 - chartPoints[6] * 5} 300,${150 - chartPoints[6] * 5}
-                       C325,${150 - chartPoints[6] * 5} 325,${150 - chartPoints[7] * 5} 350,${150 - chartPoints[7] * 5}
-                       C375,${150 - chartPoints[7] * 5} 375,${150 - chartPoints[8] * 5} 400,${150 - chartPoints[8] * 5}
-                       C425,${150 - chartPoints[8] * 5} 425,${150 - chartPoints[9] * 5} 450,${150 - chartPoints[9] * 5}
-                       `}
-              fill="none"
-              stroke="#00FF00"
-              strokeWidth="3"
-            />
-
-            {/* Points */}
-            {chartPoints.map((val, idx) => (
-              <circle
-                key={idx}
-                cx={idx * 50}
-                cy={150 - val * 5}
-                r="4"
-                fill="white"
-                stroke="black"
-                strokeWidth="2"
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart
+              data={data.missedChatsHistory || []}
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+            >
+              <CartesianGrid strokeDasharray="0" stroke="#f1f5f9" vertical={false} />
+              <XAxis
+                dataKey="week"
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: '#94a3b8', fontSize: 11 }}
               />
-            ))}
-
-            {/* Tooltip Mockup */}
-            <g transform="translate(250, 60)">
-              <rect x="-25" y="-35" width="50" height="30" rx="4" fill="black" />
-              <text x="0" y="-20" textAnchor="middle" fill="white" fontSize="8">Chats</text>
-              <text x="0" y="-8" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">13</text>
-              <path d="M-5,-5 L0,0 L5,-5 Z" fill="black" />
-            </g>
-          </svg>
-          <div className="chart-labels">
-            <span>Week 1</span>
-            <span>Week 2</span>
-            <span>Week 3</span>
-            <span>Week 4</span>
-            <span>Week 5</span>
-            <span>Week 6</span>
-            <span>Week 7</span>
-            <span>Week 8</span>
-            <span>Week 9</span>
-            <span>Week 10</span>
-          </div>
+              <YAxis
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: '#94a3b8', fontSize: 11 }}
+                domain={[0, 25]}
+                ticks={[0, 5, 10, 15, 20, 25]}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Line
+                type="monotone"
+                dataKey="chats"
+                stroke="#00FF00"
+                strokeWidth={3}
+                dot={{ fill: '#fff', stroke: '#000', strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </div>
 
@@ -106,10 +150,14 @@ const Analytics = () => {
         <div className="metric-card">
           <div className="metric-info">
             <h3>Average Reply time</h3>
-            <p>For highest customer satisfaction rates you should aim to reply to an incoming customer's message in 15 seconds or less. Quick responses will get you more conversations, help you earn customers trust and make more sales.</p>
+            <p>
+              For highest customer satisfaction rates you should aim to reply to an incoming
+              customer's message in 15 seconds or less. Quick responses will get you more
+              conversations, help you earn customers trust and make more sales.
+            </p>
           </div>
           <div className="metric-value green">
-            {data.averageReplyTime || 0} secs
+            {data.avgReplyTime || 0} secs
           </div>
         </div>
 
@@ -117,25 +165,33 @@ const Analytics = () => {
         <div className="metric-card">
           <div className="metric-info">
             <h3>Resolved Tickets</h3>
-            <p>A callback system on a website, as well as proactive invitations, help to attract even more customers. A separate round button for ordering a call with a small animation helps to motivate more customers to make calls.</p>
+            <p>
+              A callback system on a website, as well as proactive invitations, help to attract
+              even more customers. A separate round button for ordering a call with a small
+              animation helps to motivate more customers to make calls.
+            </p>
           </div>
           <div className="metric-chart">
-            <div className="pie-chart-container">
-              <svg viewBox="0 0 36 36" className="circular-chart">
-                <path className="circle-bg"
-                  d="M18 2.0845
-                                a 15.9155 15.9155 0 0 1 0 31.831
-                                a 15.9155 15.9155 0 0 1 0 -31.831"
-                />
-                <path className="circle"
-                  strokeDasharray={`${data.resolvedRatio || 0}, 100`}
-                  d="M18 2.0845
-                                a 15.9155 15.9155 0 0 1 0 31.831
-                                a 15.9155 15.9155 0 0 1 0 -31.831"
-                />
-                <text x="18" y="20.35" className="percentage">{data.resolvedRatio || 0}%</text>
-              </svg>
-            </div>
+            <ResponsiveContainer width={120} height={120}>
+              <PieChart>
+                <Pie
+                  data={resolvedData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={35}
+                  outerRadius={50}
+                  startAngle={90}
+                  endAngle={-270}
+                  paddingAngle={0}
+                  dataKey="value"
+                >
+                  {resolvedData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index]} stroke="none" />
+                  ))}
+                </Pie>
+                {renderCustomLabel()}
+              </PieChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
@@ -143,7 +199,10 @@ const Analytics = () => {
         <div className="metric-card">
           <div className="metric-info">
             <h3>Total Chats</h3>
-            <p>This metric Shows the total number of chats for all Channels for the selected the selected period</p>
+            <p>
+              This metric Shows the total number of chats for all Channels for the selected
+              the selected period
+            </p>
           </div>
           <div className="metric-value green">
             {data.totalChats || 0} Chats

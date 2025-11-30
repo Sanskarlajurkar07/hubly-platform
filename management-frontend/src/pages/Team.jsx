@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import AddMemberModal from '../components/TeamManagement/AddMemberModal';
 import EditMemberModal from '../components/TeamManagement/EditMemberModal';
 import DeleteConfirmModal from '../components/TeamManagement/DeleteConfirmModal';
+import userAvatar from '../assets/image.svg';
 import '../styles/Team.css';
 
 const Team = () => {
@@ -59,8 +60,6 @@ const Team = () => {
     }
   };
 
-  const initials = (name) => (name ? name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase() : '');
-
   return (
     <div className="team-page">
       <div className="page-header">
@@ -84,11 +83,7 @@ const Team = () => {
                 <td className="col-name">
                   <div className="name-cell">
                     <div className="avatar">
-                      {member.avatarUrl ? (
-                        <img src={member.avatarUrl} alt={member.name} />
-                      ) : (
-                        <span className="avatar-initials">{initials(member.name)}</span>
-                      )}
+                      <img src={userAvatar} alt={member.name} />
                     </div>
                     <div className="name-block">
                       <div className="member-name">{member.name}</div>
@@ -96,12 +91,11 @@ const Team = () => {
                     </div>
                   </div>
                 </td>
-
                 <td className="col-phone">{member.phone || '--'}</td>
                 <td className="col-email">{member.email}</td>
                 <td className="col-role">{member.role === 'admin' ? 'Admin' : 'Member'}</td>
                 <td className="col-actions">
-                  {user.role === 'admin' && member.role !== 'admin' && (
+                  {(user.role === 'admin' || user._id === member._id) && (
                     <div className="action-buttons">
                       <button
                         className="icon-btn edit"
@@ -112,15 +106,17 @@ const Team = () => {
                           <path d="M5.345 13.2417L13.7967 4.78999L12.6183 3.61166L4.16667 12.0633V13.2417H5.345ZM6.03583 14.9083H2.5V11.3725L12.0292 1.84332C12.1854 1.6871 12.3974 1.59933 12.6183 1.59933C12.8393 1.59933 13.0512 1.6871 13.2075 1.84332L15.565 4.20082C15.7212 4.3571 15.809 4.56902 15.809 4.78999C15.809 5.01096 15.7212 5.22288 15.565 5.37916L6.03583 14.9083ZM2.5 16.575H17.5V18.2417H2.5V16.575Z" fill="#545454" />
                         </svg>
                       </button>
-                      <button
-                        className="icon-btn delete"
-                        title="Delete"
-                        onClick={() => { setSelectedMember(member); setShowDelete(true); }}
-                      >
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M5.00033 15.8333C5.00033 16.2754 5.17592 16.6993 5.48848 17.0118C5.80104 17.3244 6.22496 17.5 6.66699 17.5H13.3337C13.7757 17.5 14.1996 17.3244 14.5122 17.0118C14.8247 16.6993 15.0003 16.2754 15.0003 15.8333V5.83333H5.00033V15.8333ZM6.66699 7.5H13.3337V15.8333H6.66699V7.5ZM12.917 3.33333L12.0837 2.5H7.91699L7.08366 3.33333H4.16699V5H15.8337V3.33333H12.917Z" fill="#545454" />
-                        </svg>
-                      </button>
+                      {user.role === 'admin' && member.role !== 'admin' && (
+                        <button
+                          className="icon-btn delete"
+                          title="Delete"
+                          onClick={() => { setSelectedMember(member); setShowDelete(true); }}
+                        >
+                          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.00033 15.8333C5.00033 16.2754 5.17592 16.6993 5.48848 17.0118C5.80104 17.3244 6.22496 17.5 6.66699 17.5H13.3337C13.7757 17.5 14.1996 17.3244 14.5122 17.0118C14.8247 16.6993 15.0003 16.2754 15.0003 15.8333V5.83333H5.00033V15.8333ZM6.66699 7.5H13.3337V15.8333H6.66699V7.5ZM12.917 3.33333L12.0837 2.5H7.91699L7.08366 3.33333H4.16699V5H15.8337V3.33333H12.917Z" fill="#545454" />
+                          </svg>
+                        </button>
+                      )}
                     </div>
                   )}
                 </td>
@@ -149,6 +145,7 @@ const Team = () => {
       {showEdit && selectedMember && (
         <EditMemberModal
           member={selectedMember}
+          currentUser={user}
           onClose={() => setShowEdit(false)}
           onSave={handleUpdate}
         />

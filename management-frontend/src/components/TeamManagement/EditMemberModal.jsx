@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-function EditMemberModal({ member, onClose, onSave }) {
+function EditMemberModal({ member, onClose, onSave, currentUser }) {
   const [formData, setFormData] = useState({
     name: member.name || '',
     email: member.email || '',
     phone: member.phone || '',
     password: '',
-    role: member.role || 'team'
+    role: member.role || 'team_member'
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ function EditMemberModal({ member, onClose, onSave }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.name) {
       setError('Name is required');
       return;
@@ -34,7 +34,7 @@ function EditMemberModal({ member, onClose, onSave }) {
         delete updateData.password;
       }
       delete updateData.email; // Email cannot be changed
-      
+
       await onSave(member._id, updateData);
     } catch (err) {
       setError(err.message || 'Failed to update member');
@@ -42,6 +42,9 @@ function EditMemberModal({ member, onClose, onSave }) {
       setLoading(false);
     }
   };
+
+  const isAdmin = currentUser?.role === 'admin';
+  const isEditingAdmin = member.role === 'admin';
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -117,8 +120,10 @@ function EditMemberModal({ member, onClose, onSave }) {
                 className="form-select"
                 value={formData.role}
                 onChange={handleChange}
+                disabled={!isAdmin || isEditingAdmin}
+                title={!isAdmin ? "Only Admin can change roles" : isEditingAdmin ? "Admin role cannot be changed" : ""}
               >
-                <option value="team">Member</option>
+                <option value="team_member">Member</option>
                 <option value="admin">Admin</option>
               </select>
             </div>

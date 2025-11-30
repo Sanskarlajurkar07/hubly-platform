@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import userAvatar from '../../assets/image.svg';
 
 function DetailsPanel({ ticket, teamMembers, onAssignTicket, onUpdateStatus, currentUser }) {
   const [showAssignDropdown, setShowAssignDropdown] = useState(false);
@@ -9,7 +10,7 @@ function DetailsPanel({ ticket, teamMembers, onAssignTicket, onUpdateStatus, cur
   const [selectedStatus, setSelectedStatus] = useState(null);
 
   if (!ticket) {
-    return <div className="details-panel"></div>;
+    return <div className="chat-details-panel"></div>;
   }
 
   const assignedMember = teamMembers.find(m => m._id === ticket.assignedTo);
@@ -48,17 +49,17 @@ function DetailsPanel({ ticket, teamMembers, onAssignTicket, onUpdateStatus, cur
   };
 
   return (
-    <div className="details-panel">
-      <div className="details-panel-header">
+    <div className="chat-details-panel">
+      <div className="details-header">
         <div className="details-avatar">
-          {ticket.userName?.charAt(0).toUpperCase()}
+          <img src={userAvatar} alt="User" />
         </div>
         <span className="details-chat-label">Chat</span>
       </div>
 
       <div className="details-section">
         <h4 className="details-section-title">Details</h4>
-        
+
         <div className="details-item">
           <div className="details-item-icon">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -97,7 +98,7 @@ function DetailsPanel({ ticket, teamMembers, onAssignTicket, onUpdateStatus, cur
 
       <div className="details-section">
         <h4 className="details-section-title">Teammates</h4>
-        
+
         <div className="details-dropdown-wrapper">
           <button
             className="details-dropdown-trigger"
@@ -105,9 +106,11 @@ function DetailsPanel({ ticket, teamMembers, onAssignTicket, onUpdateStatus, cur
           >
             <div className="details-dropdown-content">
               <div className="details-item-icon">
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
+                <img
+                  src={userAvatar}
+                  alt="Assigned"
+                  style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'cover' }}
+                />
               </div>
               <span>{assignedMember?.name || 'Joe doe'}</span>
             </div>
@@ -125,7 +128,7 @@ function DetailsPanel({ ticket, teamMembers, onAssignTicket, onUpdateStatus, cur
                   onClick={() => handleAssignClick(member)}
                 >
                   <div className="dropdown-item-avatar">
-                    {member.name?.charAt(0).toUpperCase()}
+                    <img src={userAvatar} alt={member.name} />
                   </div>
                   <span>{member.name}</span>
                 </button>
@@ -201,7 +204,7 @@ function DetailsPanel({ ticket, teamMembers, onAssignTicket, onUpdateStatus, cur
         <div className="modal-overlay" onClick={() => setShowStatusModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <p className="modal-text">
-              {selectedStatus === 'resolved' 
+              {selectedStatus === 'resolved'
                 ? 'Chat will be closed'
                 : 'Chat will be reopened'}
             </p>

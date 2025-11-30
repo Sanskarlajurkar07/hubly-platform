@@ -4,7 +4,7 @@ function AddMemberModal({ onClose, onSave }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    role: 'team'
+    role: 'team_member'
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -82,15 +82,12 @@ function AddMemberModal({ onClose, onSave }) {
 
             <div className="form-group">
               <label className="form-label">Designation</label>
-              <select
-                name="role"
-                className="form-select"
-                value={formData.role}
-                onChange={handleChange}
-              >
-                <option value="team">Member</option>
-                <option value="admin">Admin</option>
-              </select>
+              <input
+                type="text"
+                className="form-input"
+                value="Team Member"
+                disabled
+              />
             </div>
 
             <div className="modal-actions">

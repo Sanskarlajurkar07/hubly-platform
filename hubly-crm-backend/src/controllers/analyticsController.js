@@ -1,5 +1,6 @@
 const Ticket = require('../models/Ticket');
 const Message = require('../models/Message');
+const MissedChat = require('../models/MissedChat');
 
 // @desc    Get dashboard stats (counts)
 // @route   GET /api/dashboard/stats
@@ -30,20 +31,14 @@ const getAnalytics = async (req, res) => {
     const resolvedTickets = await Ticket.countDocuments({ status: 'Resolved' });
     const unresolvedTickets = totalTickets - resolvedTickets;
 
-    // 2. Total Chats Till Date (Grouped by date if needed, or just total)
-    // Requirement says "numeric counter with date range filter". 
-    // For simplicity, let's return total count and maybe last 7 days count.
+    // 2. Total Chats Till Date
     const totalChats = await Ticket.countDocuments();
 
-    // 3. Average Reply Time
-    // This is complex. We need to find the time difference between customer message and first agent reply.
-    // For MVP/Evaluation, we can mock or calculate simply if we have data.
-    // Let's try to calculate for resolved tickets.
-    // Find tickets with messages.
-
-    // Simplified Average Reply Time: (Total Time / Number of Replied Tickets)
-    // We'll leave it as a placeholder or simple calculation for now.
+    // 3. Average Reply Time (Mock for now)
     const avgReplyTime = 15; // minutes (Mock for now as calculation is heavy)
+
+    // 4. Missed Chats Historical Data
+    const missedChatsData = await MissedChat.find().sort({ week: 1 }).select('week chats -_id');
 
     res.json({
       resolvedVsUnresolved: {
@@ -52,6 +47,7 @@ const getAnalytics = async (req, res) => {
       },
       totalChats,
       avgReplyTime,
+      missedChatsHistory: missedChatsData,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

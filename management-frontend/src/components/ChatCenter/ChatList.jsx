@@ -1,3 +1,5 @@
+import userAvatar from '../../assets/image.svg';
+
 function ChatList({ tickets, selectedTicket, onSelectTicket }) {
   const formatTime = (date) => {
     return new Date(date).toLocaleTimeString('en-US', {
@@ -22,25 +24,24 @@ function ChatList({ tickets, selectedTicket, onSelectTicket }) {
           tickets.map((ticket) => (
             <div
               key={ticket._id}
-              className={`chat-list-item ${
-                selectedTicket?._id === ticket._id ? 'active' : ''
-              }`}
+              className={`chat-item ${selectedTicket?._id === ticket._id ? 'active' : ''
+                }`}
               onClick={() => onSelectTicket(ticket)}
             >
-              <div className="chat-list-item-avatar">
-                {ticket.userName?.charAt(0).toUpperCase()}
+              <div className="chat-item-avatar">
+                <img src={userAvatar} alt="User" />
               </div>
-              <div className="chat-list-item-content">
-                <div className="chat-list-item-header">
-                  <span className="chat-list-item-name">
+              <div className="chat-item-info">
+                <div className="chat-item-top">
+                  <span className="chat-name">
                     {ticket.userName || 'Chat ' + ticket.ticketId}
                   </span>
-                  <span className="chat-list-item-time">
+                  <span className="chat-time">
                     {formatTime(ticket.updatedAt || ticket.createdAt)}
                   </span>
                 </div>
-                <div className="chat-list-item-message">
-                  {ticket.lastMessage || ticket.status === 'resolved' 
+                <div className="chat-preview">
+                  {ticket.lastMessage || ticket.status === 'resolved'
                     ? 'No longer have access'
                     : 'New ticket'}
                 </div>

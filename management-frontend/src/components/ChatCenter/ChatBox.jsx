@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { messageAPI } from '../../api/messageAPI';
+import userAvatar from '../../assets/image.svg';
 
 const ChatBox = ({ chatId }) => {
   const [messages, setMessages] = useState([]);
@@ -38,33 +39,45 @@ const ChatBox = ({ chatId }) => {
   };
 
   if (!chatId) {
-    return <div className="chat-box empty">Select a conversation to start</div>;
+    return <div className="chat-main empty-chat-state">Select a conversation to start</div>;
   }
 
   return (
-    <div className="chat-box">
-      <div className="chat-messages">
+    <div className="chat-main">
+      <div className="chat-main-header">
+        <h3>Chat</h3>
+      </div>
+      <div className="chat-messages-area">
         {loading ? (
           <div className="loading">Loading messages...</div>
         ) : (
           messages.map((msg) => (
-            <div key={msg.id} className={`message ${msg.sender === 'you' ? 'sent' : 'received'}`}>
-              <div className="message-content">{msg.content}</div>
-              <span className="message-time">{msg.timestamp}</span>
+            <div key={msg.id} className={`message-row ${msg.sender === 'you' ? 'agent' : 'customer'}`}>
+              <div className={`message-avatar ${msg.sender === 'you' ? 'agent' : 'customer'}`}>
+                <img src={userAvatar} alt="User" />
+              </div>
+              <div className="message-content">
+                <div className="sender-name">{msg.sender === 'you' ? 'You' : 'Customer'}</div>
+                <div className="bubble">
+                  {msg.content}
+                </div>
+                <span className="message-time">{msg.timestamp}</span>
+              </div>
             </div>
           ))
         )}
       </div>
-      <form className="chat-input-form" onSubmit={handleSendMessage}>
-        <input
-          type="text"
-          className="chat-input"
-          placeholder="Type a message..."
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-        />
-        <button type="submit" className="send-btn">Send</button>
-      </form>
+      <div className="chat-input-wrapper">
+        <form className="chat-input-box" onSubmit={handleSendMessage}>
+          <input
+            type="text"
+            placeholder="Type a message..."
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+          />
+          <button type="submit" className="send-btn">Send</button>
+        </form>
+      </div>
     </div>
   );
 };

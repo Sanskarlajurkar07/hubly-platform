@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
+import botAvatar from '../assets/Ellipse 6.svg';
 import '../styles/ChatBotSettings.css';
 
 const ChatBotSettings = () => {
@@ -8,13 +9,21 @@ const ChatBotSettings = () => {
         headerColor: '#3B82F6',
         backgroundColor: '#FFFFFF',
         initialMessage: 'How can i help you?',
-        popMessageText: 'Ask me anything!',
+        secondaryMessage: 'Ask me anything!',
+        welcomeMessage: "👋 Want to chat about Hubly? I'm an chatbot here to help you find your way.",
+        introForm: {
+            nameLabel: 'Your name',
+            phoneLabel: 'Your Phone',
+            emailLabel: 'Your Email'
+        }
     });
+
     const [timer, setTimer] = useState({
         hours: 0,
         minutes: 10,
         seconds: 0
     });
+
     const { user } = useAuth();
 
     useEffect(() => {
@@ -22,9 +31,9 @@ const ChatBotSettings = () => {
             try {
                 const res = await api.get('/settings');
                 if (res.data) {
-                    if (res.data.chatBotConfig) setConfig(res.data.chatBotConfig);
-                    // Timer logic might need conversion if backend stores minutes as number
-                    // Backend stores `missedChatTimer` as number (minutes).
+                    if (res.data.chatBotConfig) {
+                        setConfig(prev => ({ ...prev, ...res.data.chatBotConfig }));
+                    }
                     if (res.data.missedChatTimer) {
                         setTimer({ hours: 0, minutes: res.data.missedChatTimer, seconds: 0 });
                     }
@@ -40,6 +49,16 @@ const ChatBotSettings = () => {
         setConfig({ ...config, [e.target.name]: e.target.value });
     };
 
+    const handleFormLabelChange = (field, value) => {
+        setConfig({
+            ...config,
+            introForm: {
+                ...config.introForm,
+                [field]: value
+            }
+        });
+    };
+
     const handleColorSelect = (name, color) => {
         setConfig({ ...config, [name]: color });
     }
@@ -48,7 +67,7 @@ const ChatBotSettings = () => {
         try {
             await api.put('/settings', {
                 chatBotConfig: config,
-                missedChatTimer: parseInt(timer.minutes), // Simplified for now
+                missedChatTimer: parseInt(timer.minutes),
             });
             alert('Settings updated successfully!');
         } catch (error) {
@@ -65,7 +84,9 @@ const ChatBotSettings = () => {
                 <div className="preview-section">
                     <div className="phone-mockup">
                         <div className="mockup-header" style={{ backgroundColor: config.headerColor }}>
-                            <div className="mockup-avatar">🤖</div>
+                            <div className="mockup-avatar">
+                                <img src={botAvatar} alt="Bot" />
+                            </div>
                             <span>Hubly</span>
                         </div>
                         <div className="mockup-body" style={{ backgroundColor: config.backgroundColor }}>
@@ -73,14 +94,14 @@ const ChatBotSettings = () => {
                                 {config.initialMessage}
                             </div>
                             <div className="mockup-message received">
-                                {config.popMessageText}
+                                {config.secondaryMessage}
                             </div>
 
                             <div className="mockup-form">
                                 <h4>Introduction Yourself</h4>
-                                <input type="text" placeholder="Your name" disabled />
-                                <input type="text" placeholder="Your Phone" disabled />
-                                <input type="text" placeholder="Your Email" disabled />
+                                <input type="text" placeholder={config.introForm.nameLabel} disabled />
+                                <input type="text" placeholder={config.introForm.phoneLabel} disabled />
+                                <input type="text" placeholder={config.introForm.emailLabel} disabled />
                                 <button style={{ backgroundColor: config.headerColor }}>Thank You!</button>
                             </div>
                         </div>
@@ -93,16 +114,16 @@ const ChatBotSettings = () => {
                     {/* Floating Icon Preview */}
                     <div className="floating-preview">
                         <div className="pop-tooltip">
-                            👋 Want to chat about Hubly? I'm an chatbot here to help you find your way.
+                            {config.welcomeMessage}
                             <span className="close-x">×</span>
                         </div>
                         <div className="floating-icon" style={{ backgroundColor: config.headerColor }}>
-                            🤖
+                            <img src={botAvatar} alt="Bot" />
                         </div>
                     </div>
                 </div>
 
-                {/* Settings Section */}
+                {/* Controls Section */}
                 <div className="controls-section">
 
                     <div className="control-card">
@@ -118,6 +139,7 @@ const ChatBotSettings = () => {
                             ))}
                         </div>
                         <div className="hex-input">
+                            <div className="color-preview-box" style={{ backgroundColor: config.headerColor }}></div>
                             <input
                                 type="text"
                                 name="headerColor"
@@ -140,6 +162,7 @@ const ChatBotSettings = () => {
                             ))}
                         </div>
                         <div className="hex-input">
+                            <div className="color-preview-box" style={{ backgroundColor: config.backgroundColor }}></div>
                             <input
                                 type="text"
                                 name="backgroundColor"
@@ -164,10 +187,10 @@ const ChatBotSettings = () => {
                         <div className="input-group">
                             <input
                                 type="text"
-                                name="popMessageText"
-                                value={config.popMessageText}
+                                name="secondaryMessage"
+                                value={config.secondaryMessage}
                                 onChange={handleConfigChange}
-                                placeholder="Pop Message"
+                                placeholder="Secondary Message"
                             />
                             <span className="edit-icon">✎</span>
                         </div>
@@ -175,21 +198,46 @@ const ChatBotSettings = () => {
 
                     <div className="control-card">
                         <h3>Introduction Form</h3>
-                        {/* Simplified for demo as per screenshot */}
-                        <div className="form-preview-list">
-                            <div className="form-field-preview">
+                        <div className="form-config-list">
+                            <div className="form-config-item">
                                 <label>Your name</label>
-                                <input type="text" value="Your name" readOnly />
+                                <input
+                                    type="text"
+                                    value={config.introForm.nameLabel}
+                                    onChange={(e) => handleFormLabelChange('nameLabel', e.target.value)}
+                                />
                             </div>
-                            <div className="form-field-preview">
+                            <div className="form-config-item">
                                 <label>Your Phone</label>
-                                <input type="text" value="+1 (000) 000-0000" readOnly />
+                                <input
+                                    type="text"
+                                    value={config.introForm.phoneLabel}
+                                    onChange={(e) => handleFormLabelChange('phoneLabel', e.target.value)}
+                                />
                             </div>
-                            <div className="form-field-preview">
+                            <div className="form-config-item">
                                 <label>Your Email</label>
-                                <input type="text" value="example@gmail.com" readOnly />
+                                <input
+                                    type="text"
+                                    value={config.introForm.emailLabel}
+                                    onChange={(e) => handleFormLabelChange('emailLabel', e.target.value)}
+                                />
                             </div>
                             <button className="preview-submit-btn" style={{ backgroundColor: config.headerColor }}>Thank You!</button>
+                        </div>
+                    </div>
+
+                    <div className="control-card">
+                        <h3>Welcome Message</h3>
+                        <div className="input-group textarea-group">
+                            <span className="char-count">18/50</span>
+                            <textarea
+                                name="welcomeMessage"
+                                value={config.welcomeMessage}
+                                onChange={handleConfigChange}
+                                rows="3"
+                            />
+                            <span className="edit-icon">✎</span>
                         </div>
                     </div>
 

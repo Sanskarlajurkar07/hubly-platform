@@ -17,7 +17,7 @@ const getTeam = async (req, res) => {
 // @route   POST /api/team
 // @access  Private (Admin)
 const addTeamMember = async (req, res) => {
-  const { name, email, password, phone, role } = req.body;
+  const { name, email, password, phone } = req.body;
 
   try {
     const userExists = await User.findOne({ email });
@@ -31,7 +31,7 @@ const addTeamMember = async (req, res) => {
       email,
       password,
       phone,
-      role: role || 'team_member',
+      role: 'team_member', // Always default to team_member, only one admin allowed
     });
 
     if (user) {
@@ -66,8 +66,23 @@ const updateTeamMember = async (req, res) => {
     user.phone = req.body.phone || user.phone;
     user.profileImage = req.body.profileImage || user.profileImage;
 
-    // Only admin can change role
+    // Role updates:
+    // 1. Only admin can change role
+    // 2. Cannot change TO admin (only one admin allowed)
+    // 3. Admin cannot change their OWN role (must remain admin)
     if (req.user.role === 'admin' && req.body.role) {
+      if (req.body.role === 'admin') {
+        // Prevent creating another admin
+        // Unless we are just updating the existing admin (no-op)
+        if (user.role !== 'admin') {
+          return res.status(400).json({ message: 'Cannot assign Admin role. Only one admin allowed.' });
+        }
+      }
+
+      if (user.role === 'admin' && req.body.role !== 'admin') {
+        return res.status(400).json({ message: 'Admin cannot demote themselves.' });
+      }
+
       user.role = req.body.role;
     }
 
@@ -101,6 +116,10 @@ const deleteTeamMember = async (req, res) => {
     const user = await User.findById(req.params.id);
 
     if (user) {
+      if (user.role === 'admin') {
+        return res.status(400).json({ message: 'Cannot delete the Admin account.' });
+      }
+
       // Reassign tickets to Admin before deleting
       const admin = await User.findOne({ role: 'admin' });
       if (admin) {
