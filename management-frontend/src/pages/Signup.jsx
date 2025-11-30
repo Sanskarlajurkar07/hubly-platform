@@ -26,7 +26,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-        
+
         if (!formData.firstName || !formData.lastName || !formData.email || !formData.password || !formData.confirmPassword) {
             setError('Please fill in all fields');
             return;
@@ -54,12 +54,11 @@ const Signup = () => {
             // I will follow the screenshot fields. 
             // If the backend requires 'phone', this might fail, but I must follow the UI requirement.
             // I'll pass firstName and lastName. If backend needs 'name', I can construct it.
-            
+
             // Constructing payload to be safe, but I'll check AuthContext if I can. 
             // For now, I'll send what the form has.
             await signup({
-                firstName: formData.firstName,
-                lastName: formData.lastName,
+                name: `${formData.firstName} ${formData.lastName}`,
                 email: formData.email,
                 password: formData.password
             });
