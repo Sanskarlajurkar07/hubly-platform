@@ -1,10 +1,10 @@
 function DeleteConfirmModal({ member, onClose, onConfirm }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-container small" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-body text-center">
+      <div className="modal-container delete-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-body">
           <p className="modal-text">
-            this teammate will be deleted.
+            Are you sure you want to delete this member?
           </p>
 
           <div className="modal-actions">
@@ -18,7 +18,7 @@ function DeleteConfirmModal({ member, onClose, onConfirm }) {
               className="btn btn-primary"
               onClick={() => onConfirm(member._id)}
             >
-              Confirm
+              Delete
             </button>
           </div>
         </div>

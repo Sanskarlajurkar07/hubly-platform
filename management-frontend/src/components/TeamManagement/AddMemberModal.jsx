@@ -4,8 +4,6 @@ function AddMemberModal({ onClose, onSave }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
-    password: '',
     role: 'team'
   });
   const [error, setError] = useState('');
@@ -21,7 +19,7 @@ function AddMemberModal({ onClose, onSave }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.email) {
       setError('Name and email are required');
       return;
@@ -42,11 +40,6 @@ function AddMemberModal({ onClose, onSave }) {
       <div className="modal-container large" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2 className="modal-title">Add Team members</h2>
-          <button className="modal-close-btn" onClick={onClose}>
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
         </div>
 
         <div className="modal-body">
@@ -82,31 +75,6 @@ function AddMemberModal({ onClose, onSave }) {
                 className="form-input"
                 placeholder="Email ID"
                 value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">Phone (Optional)</label>
-              <input
-                type="tel"
-                name="phone"
-                className="form-input"
-                placeholder="Phone number"
-                value={formData.phone}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">Password</label>
-              <input
-                type="password"
-                name="password"
-                className="form-input"
-                placeholder="Password"
-                value={formData.password}
                 onChange={handleChange}
                 required
               />

@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
+import AddMemberModal from '../components/TeamManagement/AddMemberModal';
+import EditMemberModal from '../components/TeamManagement/EditMemberModal';
+import DeleteConfirmModal from '../components/TeamManagement/DeleteConfirmModal';
 import '../styles/Team.css';
 
 const Team = () => {
   const [team, setTeam] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '', password: '', role: 'team_member' });
+  const [showAdd, setShowAdd] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [selectedMember, setSelectedMember] = useState(null);
   const { user } = useAuth();
 
   const fetchTeam = async () => {
     try {
       const res = await api.get('/team');
-      setTeam(res.data);
+      setTeam(res.data || []);
     } catch (error) {
       console.error('Failed to fetch team', error);
     }
@@ -22,79 +27,139 @@ const Team = () => {
     fetchTeam();
   }, []);
 
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleAdd = async (data) => {
     try {
-      await api.post('/team', formData);
-      setShowModal(false);
-      setFormData({ name: '', email: '', phone: '', password: '', role: 'team_member' });
+      await api.post('/team', data);
+      setShowAdd(false);
       fetchTeam();
-    } catch (error) {
-      alert(error.response?.data?.message || 'Failed to add member');
+    } catch (err) {
+      throw err;
     }
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm('Are you sure? This will reassign their tickets to Admin.')) {
-      try {
-        await api.delete(`/team/${id}`);
-        fetchTeam();
-      } catch (error) {
-        console.error('Failed to delete member', error);
-      }
+  const handleUpdate = async (id, data) => {
+    try {
+      await api.put(`/team/${id}`, data);
+      setShowEdit(false);
+      setSelectedMember(null);
+      fetchTeam();
+    } catch (err) {
+      throw err;
     }
   };
+
+  const handleDeleteConfirm = async (id) => {
+    try {
+      await api.delete(`/team/${id}`);
+      setShowDelete(false);
+      setSelectedMember(null);
+      fetchTeam();
+    } catch (err) {
+      console.error('Failed to delete member', err);
+    }
+  };
+
+  const initials = (name) => (name ? name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase() : '');
 
   return (
     <div className="team-page">
       <div className="page-header">
-        <h1>Team Management</h1>
-        {user.role === 'admin' && (
-          <button className="add-btn" onClick={() => setShowModal(true)}>+ Add Member</button>
-        )}
+        <h1>Team</h1>
       </div>
 
-      <div className="team-grid">
-        {team.map(member => (
-          <div key={member._id} className="member-card">
-            <div className="member-avatar">{member.name.charAt(0)}</div>
-            <div className="member-info">
-              <h3>{member.name}</h3>
-              <p className="role">{member.role.replace('_', ' ')}</p>
-              <p className="email">{member.email}</p>
-              <p className="phone">{member.phone}</p>
-            </div>
-            {user.role === 'admin' && member.role !== 'admin' && (
-              <button className="delete-btn" onClick={() => handleDelete(member._id)}>Remove</button>
-            )}
-          </div>
-        ))}
+      <div className="team-table-wrapper">
+        <table className="team-table">
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {team.map(member => (
+              <tr key={member._id} className="team-row">
+                <td className="col-name">
+                  <div className="name-cell">
+                    <div className="avatar">
+                      {member.avatarUrl ? (
+                        <img src={member.avatarUrl} alt={member.name} />
+                      ) : (
+                        <span className="avatar-initials">{initials(member.name)}</span>
+                      )}
+                    </div>
+                    <div className="name-block">
+                      <div className="member-name">{member.name}</div>
+                      <div className="member-sub">{member.email}</div>
+                    </div>
+                  </div>
+                </td>
+
+                <td className="col-phone">{member.phone || '--'}</td>
+                <td className="col-email">{member.email}</td>
+                <td className="col-role">{member.role === 'admin' ? 'Admin' : 'Member'}</td>
+                <td className="col-actions">
+                  {user.role === 'admin' && member.role !== 'admin' && (
+                    <div className="action-buttons">
+                      <button
+                        className="icon-btn edit"
+                        title="Edit"
+                        onClick={() => { setSelectedMember(member); setShowEdit(true); }}
+                      >
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M5.345 13.2417L13.7967 4.78999L12.6183 3.61166L4.16667 12.0633V13.2417H5.345ZM6.03583 14.9083H2.5V11.3725L12.0292 1.84332C12.1854 1.6871 12.3974 1.59933 12.6183 1.59933C12.8393 1.59933 13.0512 1.6871 13.2075 1.84332L15.565 4.20082C15.7212 4.3571 15.809 4.56902 15.809 4.78999C15.809 5.01096 15.7212 5.22288 15.565 5.37916L6.03583 14.9083ZM2.5 16.575H17.5V18.2417H2.5V16.575Z" fill="#545454" />
+                        </svg>
+                      </button>
+                      <button
+                        className="icon-btn delete"
+                        title="Delete"
+                        onClick={() => { setSelectedMember(member); setShowDelete(true); }}
+                      >
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M5.00033 15.8333C5.00033 16.2754 5.17592 16.6993 5.48848 17.0118C5.80104 17.3244 6.22496 17.5 6.66699 17.5H13.3337C13.7757 17.5 14.1996 17.3244 14.5122 17.0118C14.8247 16.6993 15.0003 16.2754 15.0003 15.8333V5.83333H5.00033V15.8333ZM6.66699 7.5H13.3337V15.8333H6.66699V7.5ZM12.917 3.33333L12.0837 2.5H7.91699L7.08366 3.33333H4.16699V5H15.8337V3.33333H12.917Z" fill="#545454" />
+                        </svg>
+                      </button>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h2>Add Team Member</h2>
-            <form onSubmit={handleSubmit}>
-              <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleInputChange} required />
-              <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleInputChange} required />
-              <input type="tel" name="phone" placeholder="Phone" value={formData.phone} onChange={handleInputChange} required />
-              <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleInputChange} required />
-              <select name="role" value={formData.role} onChange={handleInputChange}>
-                <option value="team_member">Team Member</option>
-                <option value="admin">Admin</option>
-              </select>
-              <div className="modal-actions">
-                <button type="button" onClick={() => setShowModal(false)}>Cancel</button>
-                <button type="submit" className="primary">Add</button>
-              </div>
-            </form>
-          </div>
+      {user.role === 'admin' && (
+        <div className="add-member-container">
+          <button className="add-team-btn" onClick={() => setShowAdd(true)}>
+            <svg className="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span className="btn-text">Add Team members</span>
+          </button>
         </div>
+      )}
+
+      {showAdd && (
+        <AddMemberModal
+          onClose={() => setShowAdd(false)}
+          onSave={handleAdd}
+        />
+      )}
+
+      {showEdit && selectedMember && (
+        <EditMemberModal
+          member={selectedMember}
+          onClose={() => setShowEdit(false)}
+          onSave={handleUpdate}
+        />
+      )}
+
+      {showDelete && selectedMember && (
+        <DeleteConfirmModal
+          member={selectedMember}
+          onClose={() => setShowDelete(false)}
+          onConfirm={handleDeleteConfirm}
+        />
       )}
     </div>
   );
