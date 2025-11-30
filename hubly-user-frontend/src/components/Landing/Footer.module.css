@@ -12,21 +12,6 @@
   padding: 75px;
   position: relative;
   min-height: 666.09px;
-  overflow: hidden; /* For background polygon */
-}
-
-/* Background polygon - decorative element from Figma */
-.footer::before {
-  content: '';
-  position: absolute;
-  width: 884px;
-  height: 629px;
-  left: calc(50% - 884px / 2);
-  bottom: 0.09px;
-  background: rgba(36, 71, 121, 0.04);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  z-index: 0;
-  pointer-events: none;
 }
 
 .container {
@@ -34,7 +19,7 @@
   display: flex;
   gap: 0;
   position: relative;
-  z-index: 1; /* Above background polygon */
+  z-index: 1;
 }
 
 /* LEFT SIDE LOGO - 150px width, 75px from left */
@@ -46,14 +31,35 @@
 }
 
 .footerLogo {
-  width: 135px;
-  height: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.footerLogo:hover {
+  opacity: 0.8;
+}
+
+.footerLogo svg {
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+}
+
+.footerLogo span {
+  font-family: 'Barlow', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #244779;
 }
 
 /* GRID LINK SECTION - 960px width starting at 405px */
 .footerGrid {
   width: 960px;
-  margin-left: 255px; /* 405px - 150px (logo width) */
+  margin-left: 255px;
+  /* 405px - 150px (logo width) */
   display: grid;
   grid-template-columns: repeat(3, 300px);
   grid-template-rows: auto auto;
@@ -98,14 +104,17 @@
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 500;
-  font-size: 17.1563px; /* Average of Figma values: 17.1563px, 17.2969px, 17.0156px, 17.4375px */
+  font-size: 17.1563px;
+  /* Average of Figma values: 17.1563px, 17.2969px, 17.0156px, 17.4375px */
   line-height: 28px;
   color: #1B1A1A;
   margin: 0;
   padding: 0;
   height: 28px;
-  margin-top: 12.05px; /* Figma: top: 12.05px */
-  margin-bottom: 18px; /* 58.05px - 12.05px - 28px = 18px */
+  margin-top: 12.05px;
+  /* Figma: top: 12.05px */
+  margin-bottom: 18px;
+  /* 58.05px - 12.05px - 28px = 18px */
   display: flex;
   align-items: center;
 }
@@ -115,7 +124,8 @@
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 16.875px; /* Average of Figma values: 16.7344px, 16.875px, 17.0156px, 17.1563px, 16.5938px, 16.1719px, 16.4531px */
+  font-size: 16.875px;
+  /* Average of Figma values: 16.7344px, 16.875px, 17.0156px, 17.1563px, 16.5938px, 16.1719px, 16.4531px */
   line-height: 28px;
   color: #1B1A1A;
   text-decoration: none;
@@ -129,7 +139,8 @@
 /* First link: top 58.05px, subsequent links: 96.05px, 134.05px, 172.05px, 210.05px */
 /* Gap between links: 38px (96.05 - 58.05 = 38px) */
 .footerCol a:not(:last-child) {
-  margin-bottom: 38px; /* Exact gap from Figma: 38px between links */
+  margin-bottom: 38px;
+  /* Exact gap from Figma: 38px between links */
 }
 
 .footerCol a:hover {
@@ -144,18 +155,20 @@
 }
 
 .socialCol h4 {
-  margin-top: 12.05px; /* Match other columns */
-  margin-bottom: 18px; /* Match other columns */
+  margin-top: 12.05px;
+  /* Match other columns */
+  margin-bottom: 18px;
+  /* Match other columns */
 }
 
 /* SOCIAL ICONS SECTION - In the 6th column (Form section) */
 /* Figma: Form section starts at top: 68.09px, social icons at top: 185.69px */
 .socials {
   display: flex;
-  gap: 22px; /* Exact from Figma: 46px - 24px icon width = 22px gap */
+  gap: 22px;
+  /* Spacing between icons */
   margin-top: 0;
   flex-wrap: wrap;
-  height: 24px;
   align-items: center;
 }
 
@@ -165,8 +178,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 0.5px solid #616161; /* Figma: 0.5px solid #616161 */
-  border-radius: 6px;
   color: #616161;
   background: transparent;
   text-decoration: none;
@@ -176,8 +187,6 @@
 }
 
 .social:hover {
-  background-color: #F8F9FA;
-  border-color: #244779;
   color: #244779;
 }
 
@@ -194,8 +203,8 @@
 }
 
 .social svg path {
-  fill: #616161; /* Figma: background: #616161 */
-  stroke: #616161; /* Figma: border: 0.5px solid #616161 */
+  fill: #616161;
+  stroke: #616161;
   transition: fill 0.2s ease, stroke 0.2s ease;
 }
 
