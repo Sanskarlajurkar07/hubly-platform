@@ -218,6 +218,50 @@
   box-shadow: 0 10px 25px rgba(23, 37, 84, 0.08);
 }
 
+.suggestionBubble {
+  align-self: flex-start;
+  background: #ffffff;
+  padding: 12px 20px;
+  border-radius: 16px 16px 16px 4px;
+  color: #1b1a1a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  max-width: 80%;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.suggestionBubble:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+.botMessage {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.botMessageAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.botMessageAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.botBubbleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .formCard {
   position: relative;
   background: #ffffff;
@@ -372,11 +416,52 @@
 
 @media (max-width: 480px) {
   .chatBox {
-    width: calc(100vw - 48px);
-    right: 24px;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    /* Dynamic viewport height for better keyboard handling */
+    bottom: 0;
+    right: 0;
+    border-radius: 0;
+    min-height: unset;
+  }
+
+  .chatHeader {
+    padding: 16px 20px;
+  }
+
+  .chatBody {
+    padding: 20px 16px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .formCard {
+    width: calc(100% - 32px);
+    max-width: 400px;
+    padding: 24px 20px;
+  }
+
+  .formGroup {
+    margin-bottom: 16px;
+  }
+
+  .chatFooter {
+    padding: 12px 16px;
   }
 
   .popupMessage {
     max-width: calc(100vw - 100px);
+  }
+
+  .chatIcon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .chatIcon svg {
+    width: 24px;
+    height: 24px;
   }
 }

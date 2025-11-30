@@ -122,6 +122,16 @@ const ChatWidget = () => {
           </div>
 
           <div className={styles.chatBody}>
+            <div className={styles.botMessage}>
+              <div className={styles.botMessageAvatar}>
+                <img src={Avatar} alt="Hubly bot" />
+              </div>
+              <div className={styles.botBubbleContainer}>
+                <div className={styles.suggestionBubble}>How can i help you?</div>
+                <div className={styles.suggestionBubble}>Ask me anything!</div>
+              </div>
+            </div>
+
             <div className={styles.greetingBubble}>
               <span>Hey!</span>
             </div>
