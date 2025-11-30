@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import api from '../api/axios';
-import '../styles/ChatCenter.css';
+import '../styles/chatcenter.css';
 import { useAuth } from '../context/AuthContext';
 
 const ChatCenter = () => {
