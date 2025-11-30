@@ -1,4 +1,17 @@
 .landingPage {
   width: 100%;
+  min-height: 100vh;
   overflow-x: hidden;
+}
+
+/* Mobile - White Background, Hide All Landing Content */
+@media (max-width: 768px) {
+  .landingPage {
+    background-color: #FFFFFF;
+  }
+
+  /* Hide all landing page sections on mobile */
+  .landingPage>*:not(:last-child) {
+    display: none !important;
+  }
 }

@@ -300,6 +300,7 @@
 @media (max-width: 768px) {
   .hero {
     padding: var(--spacing-xl) 0;
+    background: #FFFFFF;
   }
 
   .container {
