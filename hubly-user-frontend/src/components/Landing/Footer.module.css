@@ -152,23 +152,22 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+  justify-content: flex-end;
+  height: 100%;
+  padding-bottom: 5px;
 }
 
 .socialCol h4 {
   margin-top: 12.05px;
   /* Match other columns */
   margin-bottom: 18px;
-  /* Match other columns */
 }
 
-/* SOCIAL ICONS SECTION - In the 6th column (Form section) */
-/* Figma: Form section starts at top: 68.09px, social icons at top: 185.69px */
+/* SOCIAL ICONS SECTION */
 .socials {
   display: flex;
-  gap: 22px;
-  /* Spacing between icons */
-  margin-top: 0;
-  flex-wrap: wrap;
+  gap: 15px;
+  flex-wrap: nowrap;
   align-items: center;
 }
 
