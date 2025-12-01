@@ -13,7 +13,7 @@
   --hero-bg: #F8F9FA;
   --hero-white: #FFFFFF;
   --hero-border: #E5E7EB;
-  
+
   /* Typography - Exact Figma Values */
   --hero-title-size: 54px;
   --hero-title-weight: 700;
@@ -22,7 +22,7 @@
   --hero-subtitle-line: 1.4;
   --hero-button-size: 14px;
   --hero-button-weight: 600;
-  
+
   /* Spacing Scale */
   --space-8: 8px;
   --space-12: 12px;
@@ -32,12 +32,12 @@
   --space-32: 32px;
   --space-48: 48px;
   --space-60: 60px;
-  
+
   /* Border Radius */
   --radius-button: 8px;
   --radius-image: 22px;
   --radius-card: 12px;
-  
+
   /* Shadows */
   --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-image: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -148,8 +148,9 @@
 .btnSecondary {
   background: transparent;
   color: var(--hero-text-dark);
-  border: 1px solid var(--hero-border);
   padding: 10px var(--space-24);
+  border: none;
+  outline: none;
 }
 
 .btnSecondary:hover {
@@ -365,16 +366,6 @@
   }
 
   .btn {
-    padding: 10px var(--spacing-md);
     font-size: 13px;
-  }
-
-  .heroImage {
-    height: 300px;
-  }
-
-  .imageWrapper {
-    max-width: 280px;
-    height: 300px;
   }
 }
