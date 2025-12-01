@@ -149,6 +149,8 @@
   background: transparent;
   color: var(--hero-text-dark);
   padding: 10px var(--space-24);
+  border: none;
+  outline: none;
 }
 
 .btnSecondary:hover {
@@ -364,16 +366,6 @@
   }
 
   .btn {
-    padding: 10px var(--spacing-md);
     font-size: 13px;
-  }
-
-  .heroImage {
-    height: 300px;
-  }
-
-  .imageWrapper {
-    max-width: 280px;
-    height: 300px;
   }
 }
