@@ -205,6 +205,7 @@ const ChatBotSettings = () => {
                                     type="text"
                                     value={config.introForm.nameLabel}
                                     onChange={(e) => handleFormLabelChange('nameLabel', e.target.value)}
+                                    className="underlined-input"
                                 />
                             </div>
                             <div className="form-config-item">
@@ -213,6 +214,7 @@ const ChatBotSettings = () => {
                                     type="text"
                                     value={config.introForm.phoneLabel}
                                     onChange={(e) => handleFormLabelChange('phoneLabel', e.target.value)}
+                                    className="underlined-input"
                                 />
                             </div>
                             <div className="form-config-item">
@@ -221,9 +223,10 @@ const ChatBotSettings = () => {
                                     type="text"
                                     value={config.introForm.emailLabel}
                                     onChange={(e) => handleFormLabelChange('emailLabel', e.target.value)}
+                                    className="underlined-input"
                                 />
                             </div>
-                            <button className="preview-submit-btn" style={{ backgroundColor: config.headerColor }}>Thank You!</button>
+                            <button className="preview-submit-btn" style={{ backgroundColor: '#1e40af' }}>Thank You!</button>
                         </div>
                     </div>
 
@@ -246,18 +249,23 @@ const ChatBotSettings = () => {
                         <div className="timer-inputs">
                             <div className="time-col">
                                 <label>12</label>
-                                <input type="number" value={timer.hours} readOnly />
+                                <input type="text" value="00" readOnly className="timer-box" />
                             </div>
-                            <span>:</span>
+                            <span className="timer-colon">:</span>
                             <div className="time-col">
                                 <label>09</label>
-                                <input type="number" value={timer.minutes} onChange={(e) => setTimer({ ...timer, minutes: e.target.value })} />
+                                <input type="text" value={timer.minutes} onChange={(e) => setTimer({ ...timer, minutes: e.target.value })} className="timer-box" />
                             </div>
-                            <span>:</span>
+                            <span className="timer-colon">:</span>
                             <div className="time-col">
                                 <label>59</label>
-                                <input type="number" value={timer.seconds} readOnly />
+                                <input type="text" value="00" readOnly className="timer-box" />
                             </div>
+                        </div>
+                        <div className="timer-labels">
+                            <span>01</span>
+                            <span>11</span>
+                            <span>01</span>
                         </div>
                         <div className="save-action">
                             <button onClick={handleSave}>Save</button>

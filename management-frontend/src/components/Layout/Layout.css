@@ -6,7 +6,7 @@
 }
 
 .sidebar {
-    width: 80px;
+    width: 90px;
     background-color: white;
     border-right: 1px solid #e2e8f0;
     display: flex;
@@ -14,14 +14,11 @@
     align-items: center;
     padding: 20px 0;
     transition: width 0.3s;
-}
-
-.sidebar:hover {
-    width: 200px;
+    flex-shrink: 0;
 }
 
 .logo {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,34 +34,43 @@
 .sidebar nav {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     width: 100%;
     flex: 1;
+    align-items: center;
 }
 
 .sidebar nav a {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 12px 20px;
+    justify-content: center;
+    padding: 10px 5px;
     color: #64748b;
     text-decoration: none;
-    transition: all 0.3s;
-    overflow: hidden;
-    white-space: nowrap;
+    transition: all 0.2s;
+    width: 70px;
+    border-radius: 8px;
+    height: 60px;
 }
 
-.sidebar nav a:hover,
-.sidebar nav a.active {
+.sidebar nav a:hover {
     color: #3B82F6;
-    background-color: #eff6ff;
-    border-right: 3px solid #3B82F6;
+    background-color: #f1f5f9;
+}
+
+.sidebar nav a.active {
+    /* Removed blue color to match icon color as requested */
+    font-weight: 600;
+    color: #475569;
+    /* Slightly darker gray for active state */
 }
 
 .sidebar nav a .icon {
     font-size: 20px;
-    min-width: 30px;
     display: flex;
     justify-content: center;
+    margin-bottom: 4px;
 }
 
 .sidebar nav a .icon svg {
@@ -73,13 +79,15 @@
 }
 
 .sidebar nav a .label {
-    margin-left: 10px;
-    opacity: 0;
-    transition: opacity 0.2s;
+    font-size: 10px;
+    margin-left: 0;
+    text-align: center;
+    line-height: 1.2;
+    display: none;
 }
 
-.sidebar:hover nav a .label {
-    opacity: 1;
+.sidebar nav a.active .label {
+    display: block;
 }
 
 .user-profile {
@@ -101,6 +109,19 @@
     justify-content: center;
     font-size: 14px;
     color: white;
+    position: relative;
+}
+
+.user-profile .avatar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    background-color: #22c55e;
+    border: 1px solid white;
+    border-radius: 50%;
 }
 
 .logout-btn {
@@ -114,6 +135,7 @@
     justify-content: center;
     color: #64748b;
     transition: color 0.2s;
+    display: none;
 }
 
 .logout-btn:hover {
