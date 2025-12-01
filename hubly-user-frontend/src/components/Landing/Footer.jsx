@@ -14,7 +14,7 @@ const Footer = () => (
             </g>
             <defs>
               <clipPath id="clip0_footer">
-                <rect width="45" height="45" fill="white" />
+                <rect width="65" height="65" fill="white" />
               </clipPath>
             </defs>
           </svg>
