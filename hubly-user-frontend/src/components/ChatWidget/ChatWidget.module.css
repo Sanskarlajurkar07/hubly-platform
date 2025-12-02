@@ -81,7 +81,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: #2C3E50;
+  background: #33475B;
   border: none;
   display: flex;
   align-items: center;
@@ -97,8 +97,8 @@
 }
 
 .chatIcon svg {
-  width: 28px;
-  height: 28px;
+  width: 38px;
+  height: 38px;
 }
 
 .closeIcon {
