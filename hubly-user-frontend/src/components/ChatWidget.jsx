@@ -27,7 +27,11 @@ const ChatWidget = () => {
             try {
                 const res = await api.get('/settings');
                 if (res.data && res.data.chatBotConfig) {
-                    setSettings(res.data.chatBotConfig);
+                    const config = res.data.chatBotConfig;
+                    setSettings({
+                        ...config,
+                        popMessageText: config.welcomeMessage || 'Chat with us!'
+                    });
                 }
             } catch (error) {
                 console.error('Failed to fetch settings', error);

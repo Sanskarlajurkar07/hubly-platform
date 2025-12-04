@@ -248,24 +248,25 @@ const ChatBotSettings = () => {
                         <h3>Missed chat timer</h3>
                         <div className="timer-inputs">
                             <div className="time-col">
-                                <label>12</label>
-                                <input type="text" value="00" readOnly className="timer-box" />
+                                <label>Hours</label>
+                                <input type="text" value="00" readOnly className="timer-box" style={{ backgroundColor: '#f1f5f9', color: '#94a3b8' }} />
                             </div>
                             <span className="timer-colon">:</span>
                             <div className="time-col">
-                                <label>09</label>
-                                <input type="text" value={timer.minutes} onChange={(e) => setTimer({ ...timer, minutes: e.target.value })} className="timer-box" />
+                                <label>Minutes</label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    value={timer.minutes}
+                                    onChange={(e) => setTimer({ ...timer, minutes: e.target.value })}
+                                    className="timer-box"
+                                />
                             </div>
                             <span className="timer-colon">:</span>
                             <div className="time-col">
-                                <label>59</label>
-                                <input type="text" value="00" readOnly className="timer-box" />
+                                <label>Seconds</label>
+                                <input type="text" value="00" readOnly className="timer-box" style={{ backgroundColor: '#f1f5f9', color: '#94a3b8' }} />
                             </div>
-                        </div>
-                        <div className="timer-labels">
-                            <span>01</span>
-                            <span>11</span>
-                            <span>01</span>
                         </div>
                         <div className="save-action">
                             <button onClick={handleSave}>Save</button>

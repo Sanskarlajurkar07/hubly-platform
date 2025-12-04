@@ -21,7 +21,22 @@ const ChatWidget = () => {
     const fetchSettings = async () => {
       try {
         const response = await api.get('/settings');
-        setSettings(response.data);
+        const config = response.data?.chatBotConfig;
+
+        if (config) {
+          setSettings({
+            headerColor: config.headerColor || '#2C3E50',
+            backgroundColor: config.backgroundColor || '#FFFFFF',
+            initialMessage: config.initialMessage || 'Hi! How can we help you today?',
+            namePlaceholder: config.introForm?.nameLabel || 'Your name',
+            emailPlaceholder: config.introForm?.emailLabel || 'Your Email',
+            phonePlaceholder: config.introForm?.phoneLabel || '+1 (000) 000-0000',
+            popMessage: config.welcomeMessage || '👋 Want to chat about Hubly? I\'m an chatbot here to help you find your way.'
+          });
+        } else {
+          // Fallback if no config found
+          throw new Error("No config found");
+        }
       } catch (error) {
         console.error('Error fetching settings:', error);
         // Set default settings if API fails
@@ -95,7 +110,7 @@ const ChatWidget = () => {
           <div className={styles.popupAvatar}>
             <img src={Avatar} alt="Hubly bot" />
           </div>
-          <p>Chat with us!</p>
+          <p>{settings.popMessage}</p>
         </div>
       )}
 
