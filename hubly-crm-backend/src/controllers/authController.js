@@ -7,7 +7,7 @@ const generateToken = (id) => {
   });
 };
 
-// @desc    Register a new admin (Initial setup)
+// @desc    Register a new user (Admin or Team Member)
 // @route   POST /api/auth/signup
 // @access  Public
 const registerAdmin = async (req, res) => {
@@ -22,16 +22,16 @@ const registerAdmin = async (req, res) => {
 
     // Check if any admin exists
     const adminExists = await User.findOne({ role: 'admin' });
-    if (adminExists) {
-      return res.status(400).json({ message: 'Admin already exists. Only one admin allowed.' });
-    }
+
+    // If admin exists, new user is team_member. If not, new user is admin.
+    const role = adminExists ? 'team_member' : 'admin';
 
     const user = await User.create({
       name,
       email,
       password,
       phone,
-      role: 'admin',
+      role,
     });
 
     if (user) {
