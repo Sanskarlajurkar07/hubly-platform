@@ -103,36 +103,42 @@ const Analytics = () => {
           <span className="more-options">•••</span>
         </div>
         <div className="line-chart-container">
-          <ResponsiveContainer width="100%" height={250}>
-            <LineChart
-              data={safeData.missedChatsHistory || []}
-              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-            >
-              <CartesianGrid strokeDasharray="0" stroke="#f1f5f9" vertical={false} />
-              <XAxis
-                dataKey="week"
-                axisLine={false}
-                tickLine={false}
-                tick={{ fill: '#94a3b8', fontSize: 11 }}
-              />
-              <YAxis
-                axisLine={false}
-                tickLine={false}
-                tick={{ fill: '#94a3b8', fontSize: 11 }}
-                domain={[0, 25]}
-                ticks={[0, 5, 10, 15, 20, 25]}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Line
-                type="monotone"
-                dataKey="chats"
-                stroke="#00FF00"
-                strokeWidth={3}
-                dot={{ fill: '#fff', stroke: '#000', strokeWidth: 2, r: 4 }}
-                activeDot={{ r: 6 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          {safeData.missedChatsHistory && safeData.missedChatsHistory.length > 0 ? (
+            <ResponsiveContainer width="100%" height={250}>
+              <LineChart
+                data={safeData.missedChatsHistory}
+                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+              >
+                <CartesianGrid strokeDasharray="0" stroke="#f1f5f9" vertical={false} />
+                <XAxis
+                  dataKey="week"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: '#94a3b8', fontSize: 11 }}
+                />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: '#94a3b8', fontSize: 11 }}
+                  domain={[0, 25]}
+                  ticks={[0, 5, 10, 15, 20, 25]}
+                />
+                <Tooltip content={<CustomTooltip />} />
+                <Line
+                  type="monotone"
+                  dataKey="chats"
+                  stroke="#00FF00"
+                  strokeWidth={3}
+                  dot={{ fill: '#fff', stroke: '#000', strokeWidth: 2, r: 4 }}
+                  activeDot={{ r: 6 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="no-data-message" style={{ textAlign: 'center', padding: '50px', color: '#94a3b8' }}>
+              No chat data available for this period
+            </div>
+          )}
         </div>
       </div>
 
@@ -202,6 +208,3 @@ const Analytics = () => {
       </div>
     </div>
   );
-};
-
-export default Analytics;
