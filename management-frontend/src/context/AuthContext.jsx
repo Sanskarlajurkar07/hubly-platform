@@ -11,16 +11,30 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
+    const checkAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          // Verify token with backend
+          const res = await api.get('/auth/verify');
+          if (res.data) {
+            setUser(res.data);
+          } else {
+            throw new Error('Verification failed');
+          }
+        } catch (error) {
+          console.error('Token verification failed:', error);
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          setUser(null);
+        }
+      }
+      setLoading(false);
+    };
 
-    if (token && storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+    checkAuth();
   }, []);
 
-  // replace or update the login function with the following:
   const login = async ({ email, password }) => {
     try {
       console.log('AuthContext.login request ->', { email, password });
