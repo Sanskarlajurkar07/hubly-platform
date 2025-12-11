@@ -59,27 +59,18 @@ const Analytics = () => {
     );
   }
 
-  // If no data available, show empty state
-  if (!data || data.totalChats === 0) {
-    return (
-      <div className="analytics-page">
-        <div className="analytics-header">
-          <h2>Analytics</h2>
-        </div>
-        <div className="analytics-no-data">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-          </svg>
-          <p>No data available yet</p>
-        </div>
-      </div>
-    );
-  }
+  // Use safe defaults if data is missing
+  const safeData = data || {
+    resolvedVsUnresolved: { resolved: 0, unresolved: 0 },
+    totalChats: 0,
+    avgReplyTime: 0,
+    missedChatsHistory: []
+  };
 
   // Calculate resolved vs unresolved from backend data
   const resolvedData = [
-    { name: 'Resolved', value: data.resolvedVsUnresolved?.resolved || 0 },
-    { name: 'Unresolved', value: data.resolvedVsUnresolved?.unresolved || 0 }
+    { name: 'Resolved', value: safeData.resolvedVsUnresolved?.resolved || 0 },
+    { name: 'Unresolved', value: safeData.resolvedVsUnresolved?.unresolved || 0 }
   ];
 
   // Calculate percentage for display
@@ -114,7 +105,7 @@ const Analytics = () => {
         <div className="line-chart-container">
           <ResponsiveContainer width="100%" height={250}>
             <LineChart
-              data={data.missedChatsHistory || []}
+              data={safeData.missedChatsHistory || []}
               margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
             >
               <CartesianGrid strokeDasharray="0" stroke="#f1f5f9" vertical={false} />
@@ -157,7 +148,7 @@ const Analytics = () => {
             </p>
           </div>
           <div className="metric-value green">
-            {data.avgReplyTime || 0} secs
+            {safeData.avgReplyTime || 0} secs
           </div>
         </div>
 
@@ -205,7 +196,7 @@ const Analytics = () => {
             </p>
           </div>
           <div className="metric-value green">
-            {data.totalChats || 0} Chats
+            {safeData.totalChats || 0} Chats
           </div>
         </div>
       </div>
