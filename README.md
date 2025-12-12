@@ -9,6 +9,12 @@ Welcome to the Hubly CRM project. This repository contains the backend and front
 
 ---
 
+### 👤 Team Member Credentials (Newly Registered)
+**Email:** `testuser@example.com`
+**Password:** `Password123!`
+
+
+
 ## 📂 Project Structure
 
 - **`hubly-crm-backend`**: The Node.js/Express backend API.
